@@ -25,3 +25,6 @@
 [submodule "bundle/matchit"]
 	path = bundle/matchit
 	url = https://github.com/tsaleh/vim-matchit.git
+[submodule "bundle/singleCompile"]
+	path = bundle/singleCompile
+	url = https://github.com/vim-scripts/SingleCompile.git
