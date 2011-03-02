@@ -1,4 +1,5 @@
 filetype off 
+filetype plugin on
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
@@ -48,10 +49,9 @@ let g:gundo_width = 30
 let g:gundo_preview_height = 30
 nnoremap <leader>u :GundoToggle<cr>
 
-
+nnoremap <leader>gc :Extradite<cr>
 
 set nocp
-"filetype plugin on
 "autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.cxx set omnifunc=omni#cpp#complete#Main
 "let OmniCpp_SelectFirstItem = 1
 "imap <C-Space> <C-x><C-o>
@@ -81,7 +81,7 @@ map <A-l> <C-w><
 map gt <esc>:bn<cr>
 map gT <esc>:bp<cr>
 imap <C-l> <esc>V
-imap <C-j> <esc>/["\]}')>]<CR>a
+imap <C-j> <esc>/\v["\]}')>]<CR>a
 map <A-j> V%<%dd<C-o>Vkd
 inoremap sj ""<esc>i
 inoremap qj ''<esc>i
@@ -95,7 +95,7 @@ imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
 nnoremap <silent> P :YRShow<CR>
 " let g:yankring_paste_n_akey = '<m-A>'
 nmap <silent> <leader>n :nohlsearch<CR>
-nmap ,g :source $MYGVIMRC<CR>
+nmap ,gs :source $MYGVIMRC<CR>
 imap <A-k> <esc>Vj%dG
 imap <A-l> <esc>Vj%dGo<esc>pjj:w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a
 "map ; :
@@ -239,8 +239,8 @@ set incsearch
 set showmatch
 set hlsearch
 nnoremap ,<space> :noh<cr>
-nnoremap <tab> %
-vnoremap <tab> %
+" nnoremap <tab> %
+" vnoremap <tab> %
 map <F5> :mksession! ~/.vim/vim_session <cr>
 map <F6> :source ~/.vim/vim_session <cr>
 " silent execute '!mkdir -p ~/.vim/.vim_backups'
