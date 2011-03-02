@@ -7,3 +7,6 @@
 [submodule "bundle/lustyJuggler"]
 	path = bundle/lustyJuggler
 	url = https://github.com/sjbach/lusty.git
+[submodule "bundle/nerdTree"]
+	path = bundle/nerdTree
+	url = https://github.com/scrooloose/nerdtree.git
