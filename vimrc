@@ -42,7 +42,11 @@ map <silent> <A-s> :NERDTreeToggle<CR>
 map <silent> <A-f> :TlistToggle<CR>
 map <silent> <A-d> :NERDTreeToggle\|TlistToggle<CR>
 
-let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+let g:gundo_preview_bottom = 1
+let g:gundo_width = 30
+let g:gundo_preview_height = 30
+nnoremap <leader>u :GundoToggle<cr>
 
 
 
