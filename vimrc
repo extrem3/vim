@@ -58,8 +58,9 @@ set nocp
 imap <S-Space> <C-R>=strftime(" ")<CR>
 
 map ,m :w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a<esc>
-let g:clang_periodic_quickfix = 1
-let g:clang_snippets = 1
+" let g:clang_periodic_quickfix = 1
+" let g:clang_snippets = 1
+" " fucks with snipmate, for some reason... :(
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 imap <C-Space> <C-x><C-u>
@@ -92,7 +93,7 @@ inoremap bj {}<esc>i
 inoremap fj {<cr><bs>}<esc>ko
 map ;; <esc>:s/\s\+$//e<cr>A;<esc>
 imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
-nnoremap <silent> P :YRShow<CR>
+nnoremap <silent> <leader>p :YRShow<CR>
 " let g:yankring_paste_n_akey = '<m-A>'
 nmap <silent> <leader>n :nohlsearch<CR>
 nmap ,gs :source $MYGVIMRC<CR>

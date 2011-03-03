@@ -1,6 +1,6 @@
 [submodule "bundle/snipMate"]
 	path = bundle/snipMate
-	url = https://github.com/msanders/snipmate.vim.git
+	url = https://github.com/ewiplayer/snipmate.vim.git
 [submodule "bundle/command-t"]
 	path = bundle/command-t
 	url = git://git.wincent.com/command-t.git
@@ -46,3 +46,9 @@
 [submodule "bundle/extradite"]
 	path = bundle/extradite
 	url = https://github.com/int3/vim-extradite.git
+[submodule "bundle/protodef"]
+	path = bundle/protodef
+	url = https://github.com/ewiplayer/vim-protodef.git
+[submodule "bundle/fswitch"]
+	path = bundle/fswitch
+	url = https://github.com/ewiplayer/vim-fswitch.git
