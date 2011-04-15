@@ -52,3 +52,18 @@
 [submodule "bundle/fswitch"]
 	path = bundle/fswitch
 	url = https://github.com/ewiplayer/vim-fswitch.git
+[submodule "bundle/autoComplPop"]
+	path = bundle/autoComplPop
+	url = https://github.com/vim-scripts/AutoComplPop.git
+[submodule "bundle/snipMate2"]
+	path = bundle/snipMate2
+	url = https://github.com/msanders/snipmate.vim.git
+[submodule "bundle/easyGrep"]
+	path = bundle/easyGrep
+	url = http://github.com/vim-scripts/EasyGrep.git
+[submodule "bundle/easyMotion"]
+	path = bundle/easyMotion
+	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "bundle/zencoding"]
+	path = bundle/zencoding
+	url = https://github.com/mattn/zencoding-vim.git

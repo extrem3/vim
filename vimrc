@@ -3,6 +3,22 @@ filetype plugin on
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+set path+=/usr/include/c++/4.5.2/ 
+" set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set statusline=
+set statusline+=%f\ %2*%m\ %1*%h
+set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{fugitive#statusline()}
+set statusline+=%*
+set statusline+=%r%=[%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]\ %12.(%c:%l/%L%)
+set laststatus=2
+
+
+
+set undodir=~/.vim/tmp/undo// " undo files
+set backupdir=~/.vim/tmp/backup// " backups
+set directory=~/.vim/tmp/swap// " swap files
 
 
 set number
@@ -14,6 +30,8 @@ set sw=4
 set autoindent
 set incsearch
 set ignorecase
+set splitbelow
+set splitright
 syntax on
 "autocmd BufEnter * lcd %:p:h
 let mapleader=","
@@ -25,6 +43,9 @@ set guioptions-=r
 set guioptions-=R
 set guioptions-=b
 
+" nnoremap <leader>s V`]
+nnoremap <silent> <leader>s :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+cmap w!! w !sudo tee % >/dev/null
 
 set guicursor=i:block-Cursor
 set guicursor=n-v-c:blinkon0
@@ -35,7 +56,6 @@ let Tlist_Compact_Format = 1
 let Tlist_Enable_Fold_Column = 0
 let Tlist_WinWidth = 40
 let Tlist_Exist_OnlyWindow = 1
-
 
 
 "autocmd VimEnter * NERDTree
@@ -49,7 +69,23 @@ let g:gundo_width = 30
 let g:gundo_preview_height = 30
 nnoremap <leader>u :GundoToggle<cr>
 
-nnoremap <leader>gc :Extradite<cr>
+nnoremap <leader>ge :Extradite<cr>
+nnoremap <leader>gu :Extradite<cr>
+nnoremap <leader>gco :Git checkout 
+nnoremap <leader>gf :Git flow feature start 
+nnoremap <leader>gr :Git flow release start 
+nnoremap <leader>gh :Git flow hotfix start 
+nnoremap <leader>gci :Git commit 
+nnoremap <leader>gcm :Git commit -a -m ''<left>
+nnoremap <leader>gst :Gstatus<CR>
+nnoremap <leader>gb :exe ':GbranchFinish'<CR>
+" nnoremap <leader>b :bd<cr>
+
+
+" let g:acp_behaviorSnipmateLength = 1
+" let g:SuperTabMappingForward = '<nul>'
+" let g:SuperTabMappingBackward = '<s-nul>'
+" let g:SuperTabMappingTabLiteral = '<A-tab>'
 
 set nocp
 "autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.cxx set omnifunc=omni#cpp#complete#Main
@@ -58,32 +94,42 @@ set nocp
 imap <S-Space> <C-R>=strftime(" ")<CR>
 
 map ,m :w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a<esc>
-" let g:clang_periodic_quickfix = 1
-" let g:clang_snippets = 1
-" " fucks with snipmate, for some reason... :(
+let g:clang_periodic_quickfix = 1
+" fucks with snipmate, for some reason... :(
+nnoremap ,f :ClangUpdateQuickFix()<cr>
+" let g:clang_use_snipmate = 0
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
+let g:clang_hl_errors = 1
+let g:clang_snippets = 0
 imap <C-Space> <C-x><C-u>
 
 nnoremap <leader>pt <esc>:CommandT \/home\/andr3\/projects<cr>
 nnoremap <leader>b ,lj
 
+
+
+
+
+
 nnoremap S lr<cr>k$
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-map <A-h> <C-w>>
-map <A-j> <C-w>+
-map <A-k> <C-w>-
-map <A-l> <C-w><
+nnoremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <A-h> <C-w>>
+nnoremap <A-j> <C-w>+
+nnoremap <A-k> <C-w>-
+nnoremap <A-l> <C-w><
 " map gt <C-tab>
 " map gT <C-S-tab>
 map gt <esc>:bn<cr>
 map gT <esc>:bp<cr>
+nnoremap n nzz
+nnoremap N Nzz
 imap <C-l> <esc>V
-imap <C-j> <esc>/\v["\]}')>]<CR>a
-map <A-j> V%<%dd<C-o>Vkd
+inoremap <C-j> <esc>/\v["\]}')>]<CR>:nohlsearch<cr>a
+" inoremap <A-j> V%<%dd<C-o>Vkd
 inoremap sj ""<esc>i
 inoremap qj ''<esc>i
 inoremap pj ()<esc>i
@@ -96,7 +142,7 @@ imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
 nnoremap <silent> <leader>p :YRShow<CR>
 " let g:yankring_paste_n_akey = '<m-A>'
 nmap <silent> <leader>n :nohlsearch<CR>
-nmap ,gs :source $MYGVIMRC<CR>
+nmap ,v :source $MYVIMRC<CR>
 imap <A-k> <esc>Vj%dG
 imap <A-l> <esc>Vj%dGo<esc>pjj:w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a
 "map ; :
@@ -106,20 +152,16 @@ ino <C-Enter> <c-r>=InsertMissingBracket("2")<cr><esc>A;<esc>o
 ino <C-k> <c-r>=InsertMissingBracket("2")<cr>
 
 
-map <A-c> :w<CR>:!clear;g++ -Wall %<CR> 
-map <A-v> :!clear;./a.out<CR>
-
-"map <F5> :w<CR>:!clear;g++ -Wall %<CR>:!clear;./a.out<CR>
-
-map comp :call MakeCpp()
-map ,c :w<CR>comp<C-m>
-
-"map run :!./%<
-"map ,r run<C-m>
-"
 map ,w :w<cr>
 "map ,c :SCCompile -lGLU -lglut<cr>
-map ,r :SCCompileRun<cr>
+call SingleCompile#ChooseCompiler('cpp', 'clang++')
+map ,r :!./%<<cr>
+map ,c :SCCompile -o %< -lcurlpp<cr>
+" map <A-c> :w<CR>:!clear;g++ -Wall %<CR> 
+" map <A-v> :!clear;./a.out<CR>
+" map comp :call MakeCpp()
+" map ,c :w<CR>comp<C-m>
+"map <F5> :w<CR>:!clear;g++ -Wall %<CR>:!clear;./a.out<CR>
 map ,a :!./a.out<cr>
 
 vmap i> >gv<esc>o}<esc>gvo<esc>O{<esc><C-o><C-o>
@@ -227,6 +269,11 @@ if has('gui_running')
 	colorscheme liquidcarbon
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
+	set completeopt=longest,menuone
+	" inoremap <expr> <CR> pumvisible() ? '<C-y>' : '<C-g>u<CR>'
+	" inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+	" inoremap <expr> <C-p> pumvisible() ? '<C-p>' :  '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
+	" inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 endif
 
 
