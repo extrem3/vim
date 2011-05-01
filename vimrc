@@ -1,7 +1,7 @@
 filetype off 
 filetype plugin on
 call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+" call pathogen#helptags()
 
 set path+=/usr/include/c++/4.5.2/ 
 " set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
@@ -30,8 +30,8 @@ set sw=4
 set autoindent
 set incsearch
 set ignorecase
-set splitbelow
-set splitright
+" set splitbelow "breaks gitv ;_;
+" set splitright
 syntax on
 "autocmd BufEnter * lcd %:p:h
 let mapleader=","
@@ -69,8 +69,7 @@ let g:gundo_width = 30
 let g:gundo_preview_height = 30
 nnoremap <leader>u :GundoToggle<cr>
 
-nnoremap <leader>ge :Extradite<cr>
-nnoremap <leader>gu :Extradite<cr>
+nnoremap <leader>gu :Gitv!<cr>
 nnoremap <leader>gco :Git checkout 
 nnoremap <leader>gf :Git flow feature start 
 nnoremap <leader>gr :Git flow release start 
@@ -111,7 +110,7 @@ nnoremap <leader>b ,lj
 
 
 
-
+nnoremap gp `[v`]
 nnoremap S lr<cr>k$
 nnoremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
