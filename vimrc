@@ -127,7 +127,7 @@ map gT <esc>:bp<cr>
 nnoremap n nzz
 nnoremap N Nzz
 imap <C-l> <esc>V
-inoremap <C-j> <esc>/\v["\]}')>]<CR>:nohlsearch<cr>a
+inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
 " inoremap <A-j> V%<%dd<C-o>Vkd
 inoremap sj ""<esc>i
 inoremap qj ''<esc>i
@@ -135,6 +135,7 @@ inoremap pj ()<esc>i
 inoremap cj []<esc>i
 inoremap tj <><esc>i
 inoremap bj {}<esc>i
+inoremap dj $$<esc>i
 inoremap fj {<cr><bs>}<esc>ko
 map ;; <esc>:s/\s\+$//e<cr>A;<esc>
 imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
@@ -154,8 +155,27 @@ ino <C-k> <c-r>=InsertMissingBracket("2")<cr>
 map ,w :w<cr>
 "map ,c :SCCompile -lGLU -lglut<cr>
 call SingleCompile#ChooseCompiler('cpp', 'clang++')
-map ,r :!./%<<cr>
-map ,c :SCCompile -o %< -lcurlpp<cr>
+autocmd FileType cpp,cxx nnoremap <buffer> ,c :SCCompile -o %< -lcurlpp<cr>
+autocmd FileType tex nnoremap <buffer> ,c :!pdflatex %<cr>
+" map ,r :!./%<<cr>
+autocmd FileType html nnoremap <buffer> ,r :!firefox %<cr><cr>
+autocmd FileType php nnoremap <buffer> ,r :exe(GetUrl(expand("%:p")))<cr><cr>
+autocmd FileType cpp,cxx nnoremap <buffer> ,r :!./"%:r"<cr>
+autocmd FileType tex nnoremap <buffer> ,r :!mupdf "%:r".pdf<cr><cr>
+
+
+autocmd FileType tex imap <buffer> ,c \v c
+autocmd FileType tex imap <buffer> ,z \v z
+autocmd FileType tex imap <buffer> ,s \v s
+autocmd FileType tex imap <buffer> ,f \footnote{}<esc>i
+
+function! GetUrl(filename)
+    let s = substitute(a:filename, ".*\/http\/", "", "")
+    let s = substitute(s, "^", "!firefox http://localhost/", "")
+    return s
+endfunction
+
+" nnoremap <leader>lv :!mupdf "%:r".pdf<cr><cr>
 " map <A-c> :w<CR>:!clear;g++ -Wall %<CR> 
 " map <A-v> :!clear;./a.out<CR>
 " map comp :call MakeCpp()
@@ -264,8 +284,8 @@ function! InsertMissingBracket(mode)
 	endif
 endfunction
 
+colorscheme mustangpp 
 if has('gui_running')
-	colorscheme liquidcarbon
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
 	set completeopt=longest,menuone

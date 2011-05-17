@@ -1,6 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_cnt =5
 let g:netrw_dirhist_1='/home/andr3/.vim/bundle'
 let g:netrw_dirhist_2='/home/andr3/music'
 let g:netrw_dirhist_3='/home/andr3/projects/http/najditaxi/scr/js'
 let g:netrw_dirhist_4='/home/andr3/projects/http/najditaxi/scr'
+let g:netrw_dirhist_5='/home/andr3/.pentadactyl'
