@@ -1,6 +1,3 @@
-[submodule "bundle/snipMate"]
-	path = bundle/snipMate
-	url = https://github.com/ewiplayer/snipmate.vim.git
 [submodule "bundle/command-t"]
 	path = bundle/command-t
 	url = git://git.wincent.com/command-t.git
@@ -46,9 +43,6 @@
 [submodule "bundle/autoComplPop"]
 	path = bundle/autoComplPop
 	url = https://github.com/vim-scripts/AutoComplPop.git
-[submodule "bundle/snipMate2"]
-	path = bundle/snipMate2
-	url = https://github.com/msanders/snipmate.vim.git
 [submodule "bundle/easyGrep"]
 	path = bundle/easyGrep
 	url = http://github.com/vim-scripts/EasyGrep.git
@@ -61,3 +55,6 @@
 [submodule "bundle/gitv"]
 	path = bundle/gitv
 	url = https://github.com/gregsexton/gitv.git
+[submodule "bundle/snipMate"]
+	path = bundle/snipMate
+	url = https://github.com/msanders/snipmate.vim.git
