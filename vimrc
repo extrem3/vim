@@ -1,7 +1,7 @@
-filetype off 
+filetype on
 filetype plugin on
 call pathogen#runtime_append_all_bundles()
-" call pathogen#helptags()
+call pathogen#helptags()
 
 set path+=/usr/include/c++/4.5.2/ 
 " set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
@@ -15,6 +15,8 @@ set statusline+=%r%=[%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]\ %
 set laststatus=2
 
 
+" breaks fugitive
+" autocmd BufEnter * lcd %:p:h
 
 set undodir=~/.vim/tmp/undo// " undo files
 set backupdir=~/.vim/tmp/backup// " backups
@@ -24,12 +26,14 @@ set directory=~/.vim/tmp/swap// " swap files
 set number
 set cursorline
 set hidden
-set noexpandtab
-set tabstop=4
-set sw=4
+set expandtab
+set tabstop=2
+set sw=2
 set autoindent
 set incsearch
 set ignorecase
+" set textwidth=80
+" set wrap
 " set splitbelow "breaks gitv ;_;
 " set splitright
 syntax on
@@ -59,15 +63,21 @@ let Tlist_Exist_OnlyWindow = 1
 
 
 "autocmd VimEnter * NERDTree
-map <silent> <A-s> :NERDTreeToggle<CR>
-map <silent> <A-f> :TlistToggle<CR>
-map <silent> <A-d> :NERDTreeToggle\|TlistToggle<CR>
+map <silent> <A-s> :Project<CR>
+map <silent> <A-f> :TagbarToggle<CR>
+map <silent> <A-d> :Project\|TlistToggle<CR>
 
 "let g:miniBufExplMapCTabSwitchBufs = 1
 let g:gundo_preview_bottom = 1
 let g:gundo_width = 30
 let g:gundo_preview_height = 30
 nnoremap <leader>u :GundoToggle<cr>
+
+
+" let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_leader_key = '.'
+let g:EasyMotion_keys = 'asdfghjkl;qwertyuiop'
+" let g:EasyMotion_binding_f = 'w'
 
 nnoremap <leader>gu :Gitv!<cr>
 nnoremap <leader>gco :Git checkout 
@@ -95,12 +105,15 @@ imap <S-Space> <C-R>=strftime(" ")<CR>
 map ,m :w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a<esc>
 let g:clang_periodic_quickfix = 1
 " fucks with snipmate, for some reason... :(
-nnoremap ,f :ClangUpdateQuickFix()<cr>
-" let g:clang_use_snipmate = 0
+" nnoremap ,f :ClangUpdateQuickFix()<cr>
+" let g:clang_use_snipmate = 1
+let g:clang_use_library = 1
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_hl_errors = 1
 let g:clang_snippets = 0
+let g:clang_snippets_engine = "snipmate"
+let g:clang_complete_patterns = 1
 imap <C-Space> <C-x><C-u>
 
 nnoremap <leader>pt <esc>:CommandT \/home\/andr3\/projects<cr>
@@ -129,6 +142,7 @@ nnoremap N Nzz
 imap <C-l> <esc>V
 inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
 " inoremap <A-j> V%<%dd<C-o>Vkd
+map gu g~
 inoremap sj ""<esc>i
 inoremap qj ''<esc>i
 inoremap pj ()<esc>i
@@ -136,7 +150,7 @@ inoremap cj []<esc>i
 inoremap tj <><esc>i
 inoremap bj {}<esc>i
 inoremap dj $$<esc>i
-inoremap fj {<cr><bs>}<esc>ko
+inoremap fj {<cr><bs><bs>}<esc>ko
 map ;; <esc>:s/\s\+$//e<cr>A;<esc>
 imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
 nnoremap <silent> <leader>p :YRShow<CR>
@@ -153,16 +167,19 @@ ino <C-k> <c-r>=InsertMissingBracket("2")<cr>
 
 
 map ,w :w<cr>
-"map ,c :SCCompile -lGLU -lglut<cr>
-call SingleCompile#ChooseCompiler('cpp', 'clang++')
-autocmd FileType cpp,cxx nnoremap <buffer> ,c :SCCompile -o %< -lcurlpp<cr>
+" nnoremap <buffer> ,c :!cd bin/ && make<cr>
+autocmd FileType *.cc,*.h nnoremap <buffer> ,c :!cd bin/\|make<cr>
 autocmd FileType tex nnoremap <buffer> ,c :!pdflatex %<cr>
 " map ,r :!./%<<cr>
 autocmd FileType html nnoremap <buffer> ,r :!firefox %<cr><cr>
 autocmd FileType php nnoremap <buffer> ,r :exe(GetUrl(expand("%:p")))<cr><cr>
-autocmd FileType cpp,cxx nnoremap <buffer> ,r :!./"%:r"<cr>
+autocmd FileType cc,h nnoremap <buffer> ,r :!./"%:r"<cr>
 autocmd FileType tex nnoremap <buffer> ,r :!mupdf "%:r".pdf<cr><cr>
 
+
+imap ,s š
+imap ,z ž
+imap ,c č
 
 autocmd FileType tex imap <buffer> ,c \v c
 autocmd FileType tex imap <buffer> ,z \v z
@@ -328,6 +345,45 @@ function! NumberToggle()
 	endif
 endfunction
 
+" highlight ColorColumn ctermbg=darkblue ctermfg=white guibg=#592929
+" set colorcolumn=80
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+
+function! Sp(dir, mode, ...)
+
+  let split = 'sp'
+  if a:dir == '1'
+    let split = 'vsp'
+  endif
+
+  let i = a:0
+  while(i > 0)
+    execute 'let files = glob (a:' . i . ')'
+    for f in split (files, "\n")
+      if a:mode == '0'
+        execute split . ' ' . f
+      else
+        let f = fnamemodify(f, ':t:r')
+        if a:mode == '2'
+          execute split . ' tests/' . f . '_test.cc'
+        endif
+        execute split . ' src/' . f . '.cc'
+        execute split . ' inc/' . f . '.h'
+      endif
+    endfor
+    let i = i - 1
+  endwhile
+
+  windo if expand('%') == '' | q | endif
+
+endfunction
+
+com! -nargs=* -complete=file Sp call Sp(0, 0, <f-args>)
+com! -nargs=* -complete=file Vsp call Sp(1, 0, <f-args>)
+com! -nargs=* -complete=file Eh call Sp(1, 1, <f-args>)
+com! -nargs=* -complete=file Eht call Sp(1, 2, <f-args>)
 
 
 " disable vi compatibility (emulation of old bugs)
@@ -345,3 +401,5 @@ set comments=sl:/*,mb:\ *,elx:\ */
 map ,h :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 " goto definition with F12 
 map ,d <C-]>
+"set iskeyword=@,48-57,_,192-255,(,),=,[,],<,>,: 
+set iskeyword+=_,-,<,>,$,@,%,#
