@@ -1,3 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =5
 let g:netrw_dirhist_1='/home/andr3/projects/cpp/tdd_template'
+let g:netrw_dirhist_2='/home/andr3/.vim/bundle/clangComplete/autoload/snippets'
+let g:netrw_dirhist_3='/home/andr3/.vim/bundle/clangComplete/plugin/clang'
+let g:netrw_dirhist_4='/home/andr3/.pentadactyl'
+let g:netrw_dirhist_5='/home/andr3/.vim/ultiSnips'

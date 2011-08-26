@@ -1,44 +1,54 @@
 filetype on
 filetype plugin on
+
+"Pathogen, for better plugin management
+"{
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
+"}
 
-set path+=/usr/include/c++/4.5.2/ 
-" set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+"Setting up the statusline
+"{
 set statusline=
 set statusline+=%f\ %2*%m\ %1*%h
 set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%{fugitive#statusline()}
 set statusline+=%*
-set statusline+=%r%=[%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]\ %12.(%c:%l/%L%)
+set statusline+=%r%=[%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]\ %12.(%c:%l/%L%)\ [%p%%]
 set laststatus=2
+"}
 
+" Set mapleader to ,
+let mapleader=","
 
-" breaks fugitive
-" autocmd BufEnter * lcd %:p:h
-
+"Common options
+"{
+set nocp
+" Vim special file directories
+" {
 set undodir=~/.vim/tmp/undo// " undo files
 set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap// " swap files
-
-
-set number
-set cursorline
+" }
+" Buffer options 
+" {
+" Set pwd to the file in the current buffer
+" autocmd BufEnter * lcd %:p:h
 set hidden
+" }
+" Some tab options
 set expandtab
 set tabstop=2
 set sw=2
 set autoindent
+" Search options
+" {
 set incsearch
 set ignorecase
-" set textwidth=80
-" set wrap
-" set splitbelow "breaks gitv ;_;
-" set splitright
-syntax on
-"autocmd BufEnter * lcd %:p:h
-let mapleader=","
+" }
+"GUI options
+" {
+" Remove pretty much everything from the GUI
 set guioptions-=m
 set guioptions-=T
 set guioptions-=l
@@ -46,13 +56,25 @@ set guioptions-=L
 set guioptions-=r
 set guioptions-=R
 set guioptions-=b
-
-" nnoremap <leader>s V`]
-nnoremap <silent> <leader>s :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-cmap w!! w !sudo tee % >/dev/null
-
+" Show numbers
+set number
+" Show current cursor line
+set cursorline
 set guicursor=i:block-Cursor
 set guicursor=n-v-c:blinkon0
+" Setting maximum width to 80 culomns
+" set textwidth=80
+" set wrap
+" Do the coloring
+syntax on
+" }
+"}
+
+set path+=/usr/include/c++/4.5.2/ 
+
+" nnoremap <leader>s V`]
+cmap w!! w !sudo tee % >/dev/null
+
 
 
 let Tlist_Use_Right_Window = 1
@@ -66,6 +88,7 @@ let Tlist_Exist_OnlyWindow = 1
 map <silent> <A-s> :Project<CR>
 map <silent> <A-f> :TagbarToggle<CR>
 map <silent> <A-d> :Project\|TlistToggle<CR>
+map ,m :w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a<esc>
 
 "let g:miniBufExplMapCTabSwitchBufs = 1
 let g:gundo_preview_bottom = 1
@@ -96,53 +119,60 @@ nnoremap <leader>gb :exe ':GbranchFinish'<CR>
 " let g:SuperTabMappingBackward = '<s-nul>'
 " let g:SuperTabMappingTabLiteral = '<A-tab>'
 
-set nocp
 "autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.cxx set omnifunc=omni#cpp#complete#Main
 "let OmniCpp_SelectFirstItem = 1
 "imap <C-Space> <C-x><C-o>
-imap <S-Space> <C-R>=strftime(" ")<CR>
 
-map ,m :w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a<esc>
 let g:clang_periodic_quickfix = 1
-" fucks with snipmate, for some reason... :(
-" nnoremap ,f :ClangUpdateQuickFix()<cr>
-" let g:clang_use_snipmate = 1
 let g:clang_use_library = 1
 let g:clang_complete_auto = 1
+let g:clang_auto_select = 1
 let g:clang_complete_copen = 1
 let g:clang_hl_errors = 1
 let g:clang_snippets = 0
 let g:clang_snippets_engine = "snipmate"
 let g:clang_complete_patterns = 1
 imap <C-Space> <C-x><C-u>
+" nnoremap ,cu g:ClangUpdateQuickFix()<cr>
 
 nnoremap <leader>pt <esc>:CommandT \/home\/andr3\/projects<cr>
 nnoremap <leader>b ,lj
 
+nnoremap <silent> <leader>p :YRShow<CR>
+
+set runtimepath+=~/.vim/ultiSnips
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsSnippetDirectories = ["UltiSnips", "ultiSnips"]
 
 
-
-
+" Smart pasting
 nnoremap gp `[v`]
-nnoremap S lr<cr>k$
-nnoremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <A-h> <C-w>>
-nnoremap <A-j> <C-w>+
-nnoremap <A-k> <C-w>-
-nnoremap <A-l> <C-w><
-" map gt <C-tab>
-" map gT <C-S-tab>
-map gt <esc>:bn<cr>
-map gT <esc>:bp<cr>
+nnoremap p pv`]=<C-o>
+nnoremap P Pv`]=
+nnoremap \p "_ddPV`]
+" Select last pasted text
+nnoremap <leader>V V`]
+
+" Always keep cursor in the middle
+" set scrolloff=9999
+
+" Open a Quickfix window for the last search 
+nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+" Hide search results
+nmap <silent> <leader>n :nohlsearch<CR>
+" Center next and previous search results
 nnoremap n nzz
 nnoremap N Nzz
-imap <C-l> <esc>V
-inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
-" inoremap <A-j> V%<%dd<C-o>Vkd
-map gu g~
+
+" SplitJoin
+nnoremap K /[^ ]<cr>"zd$jyyP^v$h"zpJk:s/\v +$//<cr>:noh<cr>j^
+nnoremap S lr<cr>k$
+
+onoremap ad a[
+onoremap id i[
+" Insert common pairs and get cursor between them
 inoremap sj ""<esc>i
 inoremap qj ''<esc>i
 inoremap pj ()<esc>i
@@ -151,12 +181,35 @@ inoremap tj <><esc>i
 inoremap bj {}<esc>i
 inoremap dj $$<esc>i
 inoremap fj {<cr><bs><bs>}<esc>ko
-map ;; <esc>:s/\s\+$//e<cr>A;<esc>
+" Jump over next closing brace
+inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
+
+" Toggle folds with space
+nnoremap <space> za
+vnoremap <space> za
+
+" Smart moving between windows
+nnoremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <A-h> <C-w>>
+nnoremap <A-j> <C-w>+
+nnoremap <A-k> <C-w>-
+nnoremap <A-l> <C-w><
+
+" Move to next and previous buffer
+map gt <esc>:bn<cr>
+map gT <esc>:bp<cr>
+" inoremap <A-j> V%<%dd<C-o>Vkd
+
+" Toggle case with gu
+map gu g~
+
+" Insert ; on double tap
+map ;; <esc>:s/\s\+$//e<cr>A;<esc>;
 imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
-nnoremap <silent> <leader>p :YRShow<CR>
 " let g:yankring_paste_n_akey = '<m-A>'
-nmap <silent> <leader>n :nohlsearch<CR>
-nmap ,v :source $MYVIMRC<CR>
 imap <A-k> <esc>Vj%dG
 imap <A-l> <esc>Vj%dGo<esc>pjj:w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a
 "map ; :
@@ -167,6 +220,7 @@ ino <C-k> <c-r>=InsertMissingBracket("2")<cr>
 
 
 map ,w :w<cr>
+nmap ,v :source $MYVIMRC<CR>
 " nnoremap <buffer> ,c :!cd bin/ && make<cr>
 autocmd FileType *.cc,*.h nnoremap <buffer> ,c :!cd bin/\|make<cr>
 autocmd FileType tex nnoremap <buffer> ,c :!pdflatex %<cr>
@@ -176,11 +230,11 @@ autocmd FileType php nnoremap <buffer> ,r :exe(GetUrl(expand("%:p")))<cr><cr>
 autocmd FileType cc,h nnoremap <buffer> ,r :!./"%:r"<cr>
 autocmd FileType tex nnoremap <buffer> ,r :!mupdf "%:r".pdf<cr><cr>
 
-
+" Language specific mappings
 imap ,s š
 imap ,z ž
 imap ,c č
-
+" For latex
 autocmd FileType tex imap <buffer> ,c \v c
 autocmd FileType tex imap <buffer> ,z \v z
 autocmd FileType tex imap <buffer> ,s \v s

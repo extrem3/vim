@@ -1,0 +1,26 @@
+extends c
+
+###########################################################################
+#                            TextMate Snippets                            #
+###########################################################################
+
+snippet cla "class .. (class)"
+class ${1:`!p snip.rv = snip.basename or "name"`}
+{
+ public:
+  ${1/(\w+).*/$1/} (${2});
+  virtual ~${1/(\w+).*/$1/} ();
+
+ private:
+  ${0:/* data */}
+};
+endsnippet
+
+snippet nsa "namespace .. (namespace)"
+namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`}
+{
+	$0
+}${1/.+/ \/\//m}$1${1/.+//m}
+endsnippet
+
+# vim:ft=snippets:

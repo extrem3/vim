@@ -1,0 +1,44 @@
+
+###########################################################################
+#                            TextMate Snippets                            #
+###########################################################################
+
+snippet fri "for int loop (fori)"
+for (${1:int} i = 0; i < ${2:count}; ++i)
+{
+	${0}
+}
+endsnippet
+snippet frj "for int loop (fori)"
+for (${1:int} j = 0; j < ${2:count}; ++j)
+{
+	${0}
+}
+endsnippet
+snippet frk "for int loop (fori)"
+for (${1:int} k = 0; k < ${2:count}; ++k)
+{
+	${0}
+}
+endsnippet
+
+snippet enum "Enumeration"
+enum ${1:name} { $0 };
+endsnippet
+
+snippet defa "Include header once only guard"
+#ifndef ${1:`!p
+if not snip.c:
+	import string
+	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
+	snip.rv = name
+else:
+    snip.rv = snip.c`}_
+#define $1_
+
+${0}
+
+#endif //$1_
+endsnippet
+
+# vim:ft=snippets:
