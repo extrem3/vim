@@ -1,10 +1,41 @@
-filetype on
-filetype plugin on
-
 "Pathogen, for better plugin management
 "{
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+" filetype on
+" filetype plugin on
+
+" call pathogen#runtime_append_all_bundles()
+" call pathogen#helptags()
+"}
+"
+"Vundle
+"{
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Github
+Bundle 'gmarik/vundle'
+Bundle 'sjbach/lusty'
+Bundle 'godlygeek/tabular'
+Bundle 'Rip-Rip/clang_complete'
+Bundle 'tpope/vim-surround'
+Bundle 'vim-scripts/tComment'
+Bundle 'tpope/vim-fugitive'
+Bundle 'sjl/gundo.vim'
+Bundle 'chrismetcalf/vim-yankring'
+Bundle 'vim-scripts/AutoComplPop'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'mattn/zencoding-vim'
+Bundle 'gregsexton/gitv'
+Bundle 'majutsushi/tagbar'
+Bundle 'vim-scripts/UltiSnips'
+" vim-scripts
+
+" Non Github repos
+Bundle 'git://git.wincent.com/command-t.git'
+filetype plugin indent on
 "}
 
 "Setting up the statusline
@@ -402,7 +433,7 @@ endfunction
 " highlight ColorColumn ctermbg=darkblue ctermfg=white guibg=#592929
 " set colorcolumn=80
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+autocmd BufAdd * match OverLength /\%81v.\+/
 
 
 function! Sp(dir, mode, ...)
@@ -438,6 +469,29 @@ com! -nargs=* -complete=file Sp call Sp(0, 0, <f-args>)
 com! -nargs=* -complete=file Vsp call Sp(1, 0, <f-args>)
 com! -nargs=* -complete=file Eh call Sp(1, 1, <f-args>)
 com! -nargs=* -complete=file Eht call Sp(1, 2, <f-args>)
+
+
+function! CheckHeaders(file)
+
+  if winnr('$') >= 3 && winnr() == 1
+    execute 'edit inc/' . a:file . '.h'
+    set ft=cpp
+    wincmd l
+    execute 'edit src/' . a:file . '.cc'
+    set ft=cpp
+    wincmd l
+    execute 'edit tests/' . a:file . '_test.cc'
+    set ft=cpp
+    wincmd l
+    wincmd h
+    wincmd h
+    wincmd h
+    wincmd h
+  endif
+
+endfunction
+
+" autocmd BufRead *.h execute CheckHeaders(expand('%:t:r'))
 
 
 " disable vi compatibility (emulation of old bugs)
