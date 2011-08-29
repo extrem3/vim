@@ -101,7 +101,9 @@ syntax on
 " }
 "}
 
-set path+=/usr/include/c++/4.5.2/ 
+
+set path+=/usr/include/c++/4.5.2/
+exec "set path+=" . getcwd() . "/inc/"
 
 " nnoremap <leader>s V`]
 cmap w!! w !sudo tee % >/dev/null
@@ -162,6 +164,7 @@ let g:clang_complete_copen = 1
 let g:clang_hl_errors = 1
 let g:clang_snippets = 0
 let g:clang_snippets_engine = "snipmate"
+" let g:clang_auto_user_options = "/home/andr3/projects/cpp/conway/inc/, .clang_complete"
 let g:clang_complete_patterns = 1
 imap <C-Space> <C-x><C-u>
 " nnoremap ,cu g:ClangUpdateQuickFix()<cr>
