@@ -103,6 +103,7 @@ syntax on
 
 
 set path+=/usr/include/c++/4.5.2/
+set path+=/usr/include/QtCore/
 exec "set path+=" . getcwd() . "/inc/"
 
 " nnoremap <leader>s V`]
@@ -120,6 +121,8 @@ let Tlist_Exist_OnlyWindow = 1
 "autocmd VimEnter * NERDTree
 map <silent> <A-s> :Project<CR>
 map <silent> <A-f> :TagbarToggle<CR>
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
 map <silent> <A-d> :Project\|TlistToggle<CR>
 map ,m :w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a<esc>
 
@@ -391,6 +394,7 @@ endfunction
 
 colorscheme mustangpp 
 if has('gui_running')
+  colorscheme liquidcarbon
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
 	set completeopt=longest,menuone
