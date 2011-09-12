@@ -31,10 +31,11 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/gitv'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/UltiSnips'
+Bundle 'kien/ctrlp.vim'
 " vim-scripts
 
 " Non Github repos
-Bundle 'git://git.wincent.com/command-t.git'
+
 filetype plugin indent on
 "}
 
@@ -174,6 +175,9 @@ imap <C-Space> <C-x><C-u>
 
 nnoremap <leader>pt <esc>:CommandT \/home\/andr3\/projects<cr>
 nnoremap <leader>b ,lj
+
+set wildignore+=.git/*
+let g:ctrlp_working_path_mode = 0
 
 nnoremap <silent> <leader>p :YRShow<CR>
 
