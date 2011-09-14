@@ -102,7 +102,10 @@ syntax on
 "}
 
 
-set path+=/usr/include/c++/4.5.2/
+set path+=/usr/include/c++/4.6.1/
+set path+=/usr/include/c++/4.6.1/i486-linux-gnu/
+set path+=/usr/include/c++/4.6.1/i486-linux-gnu/64/
+set path+=/usr/include/i386-linux-gnu/
 exec "set path+=" . getcwd() . "/inc/"
 
 " nnoremap <leader>s V`]
@@ -157,7 +160,7 @@ nnoremap <leader>gb :exe ':GbranchFinish'<CR>
 "imap <C-Space> <C-x><C-o>
 
 let g:clang_periodic_quickfix = 1
-let g:clang_use_library = 1
+let g:clang_use_library = 0
 let g:clang_complete_auto = 1
 let g:clang_auto_select = 1
 let g:clang_complete_copen = 1
@@ -165,7 +168,7 @@ let g:clang_hl_errors = 1
 let g:clang_snippets = 0
 let g:clang_snippets_engine = "snipmate"
 " let g:clang_auto_user_options = "/home/andr3/projects/cpp/conway/inc/, .clang_complete"
-let g:clang_complete_patterns = 1
+let g:clang_complete_patterns = 0
 imap <C-Space> <C-x><C-u>
 " nnoremap ,cu g:ClangUpdateQuickFix()<cr>
 
