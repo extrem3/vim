@@ -31,10 +31,11 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/gitv'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/UltiSnips'
+Bundle 'kien/ctrlp.vim'
 " vim-scripts
 
 " Non Github repos
-Bundle 'git://git.wincent.com/command-t.git'
+
 filetype plugin indent on
 "}
 
@@ -106,6 +107,8 @@ set path+=/usr/include/c++/4.6.1/
 set path+=/usr/include/c++/4.6.1/i486-linux-gnu/
 set path+=/usr/include/c++/4.6.1/i486-linux-gnu/64/
 set path+=/usr/include/i386-linux-gnu/
+set path+=/usr/include/QtCore/
+
 exec "set path+=" . getcwd() . "/inc/"
 
 " nnoremap <leader>s V`]
@@ -123,6 +126,8 @@ let Tlist_Exist_OnlyWindow = 1
 "autocmd VimEnter * NERDTree
 map <silent> <A-s> :Project<CR>
 map <silent> <A-f> :TagbarToggle<CR>
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
 map <silent> <A-d> :Project\|TlistToggle<CR>
 map ,m :w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a<esc>
 
@@ -174,6 +179,9 @@ imap <C-Space> <C-x><C-u>
 
 nnoremap <leader>pt <esc>:CommandT \/home\/andr3\/projects<cr>
 nnoremap <leader>b ,lj
+
+set wildignore+=.git/*
+let g:ctrlp_working_path_mode = 0
 
 nnoremap <silent> <leader>p :YRShow<CR>
 
@@ -394,6 +402,7 @@ endfunction
 
 colorscheme mustangpp 
 if has('gui_running')
+  colorscheme liquidcarbon
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
 	set completeopt=longest,menuone
