@@ -103,8 +103,12 @@ syntax on
 "}
 
 
-set path+=/usr/include/c++/4.5.2/
-set path+=/usr/include/QtCore/
+set path+=/usr/include/c++/4.6/
+set path+=/usr/include/
+set path+=/usr/include/qt4/
+set path+=/usr/include/qt4/QtCore/
+set path+=/usr/include/qt4/QtGui/
+set path+=/home/andr3/projects/cc/libs/gtest/gtest-1.6.0/include/
 exec "set path+=" . getcwd() . "/inc/"
 
 " nnoremap <leader>s V`]
@@ -161,7 +165,7 @@ nnoremap <leader>gb :exe ':GbranchFinish'<CR>
 "imap <C-Space> <C-x><C-o>
 
 let g:clang_periodic_quickfix = 1
-let g:clang_use_library = 1
+let g:clang_use_library = 0
 let g:clang_complete_auto = 1
 let g:clang_auto_select = 1
 let g:clang_complete_copen = 1
@@ -169,7 +173,7 @@ let g:clang_hl_errors = 1
 let g:clang_snippets = 0
 let g:clang_snippets_engine = "snipmate"
 " let g:clang_auto_user_options = "/home/andr3/projects/cpp/conway/inc/, .clang_complete"
-let g:clang_complete_patterns = 1
+let g:clang_complete_patterns = 0
 imap <C-Space> <C-x><C-u>
 " nnoremap ,cu g:ClangUpdateQuickFix()<cr>
 
@@ -396,12 +400,11 @@ function! InsertMissingBracket(mode)
 	endif
 endfunction
 
-colorscheme mustangpp 
+colorscheme dummy
 if has('gui_running')
-  colorscheme liquidcarbon
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
-	set completeopt=longest,menuone
+	set completeopt=longest
 	" inoremap <expr> <CR> pumvisible() ? '<C-y>' : '<C-g>u<CR>'
 	" inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 	" inoremap <expr> <C-p> pumvisible() ? '<C-p>' :  '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
@@ -443,9 +446,6 @@ endfunction
 
 " highlight ColorColumn ctermbg=darkblue ctermfg=white guibg=#592929
 " set colorcolumn=80
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-autocmd BufAdd * match OverLength /\%81v.\+/
-
 
 function! Sp(dir, mode, ...)
 
@@ -522,3 +522,7 @@ map ,h :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 map ,d <C-]>
 "set iskeyword=@,48-57,_,192-255,(,),=,[,],<,>,: 
 set iskeyword+=_,-,<,>,$,@,%,#
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+autocmd BufAdd * match OverLength /\%81v.\+/
+match OverLength /\%81v.\+/
