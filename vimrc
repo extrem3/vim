@@ -252,8 +252,8 @@ map gT <esc>:bp<cr>
 map gu g~
 
 " Insert ; on double tap
-map ;; <esc>:s/\s\+$//e<cr>A;<esc>;
-imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
+nmap ;; <esc>:s/;\?$/;/<cr><esc>n:noh<cr>
+imap ;; <esc>:s/;\?$/;/<cr><esc>n:noh<cr>
 " let g:yankring_paste_n_akey = '<m-A>'
 imap <A-k> <esc>Vj%dG
 imap <A-l> <esc>Vj%dGo<esc>pjj:w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a
@@ -268,12 +268,9 @@ map ,w :w<cr>
 nmap ,v :source $MYVIMRC<CR>
 " nnoremap <buffer> ,c :!cd bin/ && make<cr>
 autocmd FileType *.cc,*.h nnoremap <buffer> ,c :!cd bin/\|make<cr>
-autocmd FileType tex nnoremap <buffer> ,c :!pdflatex %<cr>
-" map ,r :!./%<<cr>
 autocmd FileType html nnoremap <buffer> ,r :!firefox %<cr><cr>
 autocmd FileType php nnoremap <buffer> ,r :exe(GetUrl(expand("%:p")))<cr><cr>
 autocmd FileType cc,h nnoremap <buffer> ,r :!./"%:r"<cr>
-autocmd FileType tex nnoremap <buffer> ,r :!mupdf "%:r".pdf<cr><cr>
 
 " Language specific mappings
 imap ,s š
@@ -522,6 +519,8 @@ map ,h :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 map ,d <C-]>
 "set iskeyword=@,48-57,_,192-255,(,),=,[,],<,>,: 
 set iskeyword+=_,-,<,>,$,@,%,#
+
+autocmd! BufWritePost .vimrc source %
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 autocmd BufAdd * match OverLength /\%81v.\+/
