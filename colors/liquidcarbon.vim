@@ -16,7 +16,7 @@ let colors_name = "liquidcarbon"
 " Normal Color {{{1
 " ============================================================================
 " hi Normal           guifg=#bdcdcd   guibg=#0a0a0a
-hi Normal           guifg=#FFFFFF guibg=#0a0a0a
+hi Normal           guifg=#DDDDDD guibg=#0a0a0a
 " 1}}}
 
 " Core Highlights {{{1
@@ -69,7 +69,7 @@ hi  WildMenu        guifg=#000000   guibg=#87ceeb   gui=NONE
 
 "  General {{{2
 " -----------------------------------------------------------------------------
-hi  Comment         guifg=#105010   guibg=NONE      gui=italic
+hi  Comment         guifg=#105010   guibg=NONE      gui=NONE
 hi  Constant        guifg=#00adcd   guibg=NONE      gui=NONE
 hi  String          guifg=#55cb70   guibg=NONE      gui=NONE
 hi  Boolean         guifg=#cd69c9   guibg=NONE      gui=NONE

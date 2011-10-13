@@ -104,11 +104,14 @@ syntax on
 
 
 set path+=/usr/include/c++/4.6.1/
-set path+=/usr/include/c++/4.6.1/i486-linux-gnu/
-set path+=/usr/include/c++/4.6.1/i486-linux-gnu/64/
 set path+=/usr/include/i386-linux-gnu/
 set path+=/usr/include/QtCore/
-
+set path+=/usr/include/c++/4.6/
+set path+=/usr/include/
+set path+=/usr/include/qt4/
+set path+=/usr/include/qt4/QtCore/
+set path+=/usr/include/qt4/QtGui/
+set path+=/home/andr3/projects/cc/libs/gtest/gtest-1.6.0/include/
 exec "set path+=" . getcwd() . "/inc/"
 
 " nnoremap <leader>s V`]
@@ -252,8 +255,8 @@ map gT <esc>:bp<cr>
 map gu g~
 
 " Insert ; on double tap
-map ;; <esc>:s/\s\+$//e<cr>A;<esc>;
-imap ;; <esc>:s/\s\+$//e<cr>A;<esc>
+nmap ;; <esc>:s/;\?$/;/<cr><esc>n:noh<cr>
+imap ;; <esc>:s/;\?$/;/<cr><esc>n:noh<cr>
 " let g:yankring_paste_n_akey = '<m-A>'
 imap <A-k> <esc>Vj%dG
 imap <A-l> <esc>Vj%dGo<esc>pjj:w\|!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>:TlistUpdate<CR>a
@@ -268,12 +271,9 @@ map ,w :w<cr>
 nmap ,v :source $MYVIMRC<CR>
 " nnoremap <buffer> ,c :!cd bin/ && make<cr>
 autocmd FileType *.cc,*.h nnoremap <buffer> ,c :!cd bin/\|make<cr>
-autocmd FileType tex nnoremap <buffer> ,c :!pdflatex %<cr>
-" map ,r :!./%<<cr>
 autocmd FileType html nnoremap <buffer> ,r :!firefox %<cr><cr>
 autocmd FileType php nnoremap <buffer> ,r :exe(GetUrl(expand("%:p")))<cr><cr>
 autocmd FileType cc,h nnoremap <buffer> ,r :!./"%:r"<cr>
-autocmd FileType tex nnoremap <buffer> ,r :!mupdf "%:r".pdf<cr><cr>
 
 " Language specific mappings
 imap ,s š
@@ -400,12 +400,11 @@ function! InsertMissingBracket(mode)
 	endif
 endfunction
 
-colorscheme mustangpp 
+colorscheme dummy
 if has('gui_running')
-  colorscheme liquidcarbon
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
-	set completeopt=longest,menuone
+	set completeopt=longest
 	" inoremap <expr> <CR> pumvisible() ? '<C-y>' : '<C-g>u<CR>'
 	" inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 	" inoremap <expr> <C-p> pumvisible() ? '<C-p>' :  '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
@@ -447,9 +446,6 @@ endfunction
 
 " highlight ColorColumn ctermbg=darkblue ctermfg=white guibg=#592929
 " set colorcolumn=80
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-autocmd BufAdd * match OverLength /\%81v.\+/
-
 
 function! Sp(dir, mode, ...)
 
@@ -526,3 +522,9 @@ map ,h :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 map ,d <C-]>
 "set iskeyword=@,48-57,_,192-255,(,),=,[,],<,>,: 
 set iskeyword+=_,-,<,>,$,@,%,#
+
+autocmd! BufWritePost .vimrc source %
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+autocmd BufAdd * match OverLength /\%81v.\+/
+match OverLength /\%81v.\+/
