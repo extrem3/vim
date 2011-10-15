@@ -309,6 +309,19 @@ map cla :cla<C-m>
 map cc :cc<C-m>
 
 
+function! CheckTests()
+  silent make
+  if len(getqflist()) == 0
+    set makeprg=./bin/tests\ $*\\\|\ grep\ \-i\ 'Failure'\ \-A\ 3\ $*\\\|\ grep\ \-v\ \-i\ '\\-\\-'\ $*\\\|\ sed\ \-e\ 'N;s\/\\n\/,\ \/'\ $*\\\|\ sed\ \-e\ 'N;s\/\\n\/\ >\ \/'\ $*\\\|\ sed\ \-e\ 'N;s\/\ \ \/\ \/'
+    set errorformat=%f:%l:\ Failure\\,\ Value\ of:\ %m
+    silent make
+    if len(getqflist()) > 0
+      copen
+    endif
+  endif
+  call SetUpMakeForCpp()
+endfunction
+
 function! MakeCpp()
 	set makeprg=g++\ -Wall\ -ansi\ -pedantic\ %\ -o\ %<
 	make
@@ -400,7 +413,7 @@ function! InsertMissingBracket(mode)
 	endif
 endfunction
 
-colorscheme dummy
+colorscheme Tomorrow-Night
 if has('gui_running')
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
@@ -524,6 +537,8 @@ map ,d <C-]>
 set iskeyword+=_,-,<,>,$,@,%,#
 
 autocmd! BufWritePost .vimrc source %
+
+botright cwindow
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 autocmd BufAdd * match OverLength /\%81v.\+/
