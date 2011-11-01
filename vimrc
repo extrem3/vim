@@ -24,7 +24,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/tComment'
 Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
-Bundle 'chrismetcalf/vim-yankring'
+" Bundle 'chrismetcalf/vim-yankring'
 Bundle 'vim-scripts/AutoComplPop'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'mattn/zencoding-vim'
@@ -203,6 +203,8 @@ nnoremap \p "_ddPV`]
 " Select last pasted text
 nnoremap <leader>V V`]
 
+nmap Y y$
+
 " Always keep cursor in the middle
 " set scrolloff=9999
 
@@ -221,14 +223,14 @@ nnoremap S lr<cr>k$
 onoremap ad a[
 onoremap id i[
 " Insert common pairs and get cursor between them
-inoremap sj ""<esc>i
-inoremap qj ''<esc>i
-inoremap pj ()<esc>i
-inoremap cj []<esc>i
-inoremap tj <><esc>i
-inoremap bj {}<esc>i
-inoremap dj $$<esc>i
-inoremap fj {<cr><bs><bs>}<esc>ko
+inoremap ,s ""<esc>i
+inoremap ,q ''<esc>i
+inoremap ,p ()<esc>i
+inoremap ,c []<esc>i
+inoremap ,t <><esc>i
+inoremap ,b {}<esc>i
+inoremap ,d $$<esc>i
+inoremap ,f {<cr><bs><bs>}<esc>ko
 " Jump over next closing brace
 inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
 
@@ -241,10 +243,10 @@ nnoremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <A-h> <C-w>>
-nnoremap <A-j> <C-w>+
-nnoremap <A-k> <C-w>-
-nnoremap <A-l> <C-w><
+nnoremap <A-h> <C-w>5>
+nnoremap <A-j> <C-w>5+
+nnoremap <A-k> <C-w>5-
+nnoremap <A-l> <C-w>5<
 
 " Move to next and previous buffer
 map gt <esc>:bn<cr>
@@ -283,7 +285,6 @@ imap ,c č
 autocmd FileType tex imap <buffer> ,c \v c
 autocmd FileType tex imap <buffer> ,z \v z
 autocmd FileType tex imap <buffer> ,s \v s
-autocmd FileType tex imap <buffer> ,f \footnote{}<esc>i
 
 function! GetUrl(filename)
     let s = substitute(a:filename, ".*\/http\/", "", "")
@@ -317,6 +318,8 @@ function! CheckTests()
     silent make
     if len(getqflist()) > 0
       copen
+    else
+      cclose
     endif
   endif
   call SetUpMakeForCpp()
