@@ -24,8 +24,10 @@ Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/tComment'
 Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
+Bundle 'sjl/threesome.vim'
 " Bundle 'chrismetcalf/vim-yankring'
 Bundle 'vim-scripts/AutoComplPop'
+Bundle 'vim-scripts/bufkill.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/gitv'
@@ -49,6 +51,9 @@ set statusline+=%*
 set statusline+=%r%=[%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]\ %12.(%c:%l/%L%)\ [%p%%]
 set laststatus=2
 "}
+
+let g:LustyJugglerShowKeys = 'a'
+let g:LustyJugglerSuppressRubyWarning = 1
 
 " Set mapleader to ,
 let mapleader=","
@@ -99,6 +104,16 @@ set guicursor=n-v-c:blinkon0
 " set wrap
 " Do the coloring
 syntax on
+" }
+" Wildmenu
+" {
+set wildmenu
+set wildmode=full
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc,*.pdf          " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 " }
 "}
 
@@ -197,9 +212,9 @@ let g:UltiSnipsSnippetDirectories = ["UltiSnips", "ultiSnips"]
 
 " Smart pasting
 nnoremap gp `[v`]
-nnoremap p pv`]=<C-o>
-nnoremap P Pv`]=
-nnoremap \p "_ddPV`]
+" nnoremap p pv`]=<C-o>
+" nnoremap P Pv`]=
+" nnoremap \p "_ddPV`]
 " Select last pasted text
 nnoremap <leader>V V`]
 
@@ -311,14 +326,18 @@ map cc :cc<C-m>
 
 
 function! CheckTests()
+  call AlertUser("Compiling", "update")
   silent make
+  call AlertUser("Checking tests", "warning")
   if len(getqflist()) == 0
     set makeprg=./bin/tests\ $*\\\|\ grep\ \-i\ 'Failure'\ \-A\ 3\ $*\\\|\ grep\ \-v\ \-i\ '\\-\\-'\ $*\\\|\ sed\ \-e\ 'N;s\/\\n\/,\ \/'\ $*\\\|\ sed\ \-e\ 'N;s\/\\n\/\ >\ \/'\ $*\\\|\ sed\ \-e\ 'N;s\/\ \ \/\ \/'
     set errorformat=%f:%l:\ Failure\\,\ Value\ of:\ %m
     silent make
     if len(getqflist()) > 0
+      call AlertUser("Some tests failed", "error")
       copen
     else
+      call AlertUser("All tests passed", "done")
       cclose
     endif
   endif
@@ -463,39 +482,106 @@ endfunction
 " highlight ColorColumn ctermbg=darkblue ctermfg=white guibg=#592929
 " set colorcolumn=80
 
-function! Sp(dir, mode, ...)
+function! Sp(dir, mode, linked, ...)
 
+  let numOfWindows = winnr("$")
   let split = 'sp'
   if a:dir == '1'
     let split = 'vsp'
   endif
+  if a:linked == '2'
+    " windows linked by width
+    wincmd b
+    let move = ""
+    let where = "leftabove "
+    if numOfWindows >= 3
+      wincmd t
+      let move = " \| wincmd l "
+      let where = "leftabove "
+      let split = 'sp'
+    endif
 
-  let i = a:0
-  while(i > 0)
-    execute 'let files = glob (a:' . i . ')'
-    for f in split (files, "\n")
-      if a:mode == '0'
-        execute split . ' ' . f
-      else
-        let f = fnamemodify(f, ':t:r')
-        if a:mode == '2'
-          execute split . ' tests/' . f . '_test.cc'
+    let i = a:0
+    while(i > 0)
+      execute 'let files = glob (a:' . i . ')'
+      for f in split (files, "\n")
+        if a:mode == '0'
+          execute split . ' ' . f
+        else
+          let f = fnamemodify(f, ':t:r')
+          execute where . split . ' inc/' . f . '.h'. move 
+          if numOfWindows < 3
+            let where = "rightbelow "
+          endif
+          execute where . split . ' src/' . f . '.cc' . move
+          if numOfWindows < 3
+            if a:mode == '2'
+                execute where . split . ' tests/' . f . '_test.cc' . move
+            endif
+          endif
         endif
-        execute split . ' src/' . f . '.cc'
-        execute split . ' inc/' . f . '.h'
-      endif
-    endfor
-    let i = i - 1
-  endwhile
+      endfor
+      let i = i - 1
+    endwhile
+  else
+    " windows linked by height
+    let hasMain = 0
+    wincmd b
+    if expand("%") == "main.cc"
+      let hasMain = 1
+    endif
+
+    if numOfWindows >= 3
+      let split = 'vsp'
+    endif
+
+    let i = a:0
+    while(i > 0)
+      execute 'let files = glob (a:' . i . ')'
+      for f in split (files, "\n")
+        if a:mode == '0'
+          execute split . ' ' . f
+        else
+          let f = fnamemodify(f, ':t:r')
+          if numOfWindows >=3
+            if hasMain == 1
+              quit
+            endif
+            execute 'bot sp'
+            let split = 'e '
+          endif
+          if a:mode == '2'
+            execute split . ' tests/' . f . '_test.cc'
+            if numOfWindows >=3
+              let split = 'vsp '
+            endif
+          endif
+          execute split . ' src/' . f . '.cc'
+          if numOfWindows >=3
+            let split = 'vsp '
+          endif
+          execute split . ' inc/' . f . '.h'
+          if numOfWindows >=3
+            if hasMain == 1
+              execute 'botright vsp main.cc'
+            endif
+          endif
+        endif
+      endfor
+      let i = i - 1
+    endwhile
+  endif
 
   windo if expand('%') == '' | q | endif
 
 endfunction
 
-com! -nargs=* -complete=file Sp call Sp(0, 0, <f-args>)
-com! -nargs=* -complete=file Vsp call Sp(1, 0, <f-args>)
-com! -nargs=* -complete=file Eh call Sp(1, 1, <f-args>)
-com! -nargs=* -complete=file Eht call Sp(1, 2, <f-args>)
+com! -nargs=* -complete=file Sp call Sp(0, 0, 0, <f-args>)
+com! -nargs=* -complete=file Vsp call Sp(1, 0, 0, <f-args>)
+com! -nargs=* -complete=file Eh call Sp(1, 1, 2, <f-args>)
+com! -nargs=* -complete=file Eht call Sp(1, 2, 2, <f-args>)
+com! -nargs=* -complete=file Eh2 call Sp(1, 1, 1, <f-args>)
+com! -nargs=* -complete=file Eht2 call Sp(1, 2, 1, <f-args>)
 
 
 function! CheckHeaders(file)
@@ -546,3 +632,23 @@ botright cwindow
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 autocmd BufAdd * match OverLength /\%81v.\+/
 match OverLength /\%81v.\+/
+
+
+
+function! AlertUser(text, status)
+  if a:status == "done"
+    hi passedColor guifg=#000000 guibg=#66ff00
+  elseif a:status == "warning"
+    hi passedColor guifg=#000000 guibg=#ff6600
+  elseif a:status == "update"
+    hi passedColor guifg=#000000 guibg=#00ccff
+  else
+    hi passedColor guifg=#000000 guibg=#d00000
+  endif
+
+  echohl passedColor
+  echo " " . a:text . " "
+
+  redraw
+endfunction
+" command! NyanMe call NyanMe()

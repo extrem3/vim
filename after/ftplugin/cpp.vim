@@ -5,10 +5,13 @@ endfunction
 call SetUpMakeForCpp()
 
 function! MakeCc()
+  call AlertUser("Compiling", "update")
   silent make
   if len(getqflist()) > 0
+    call AlertUser("Compiling failed", "error")
     copen
   else
+    call AlertUser("Successfully compiled", "done")
     cclose
   endif
 endfunction

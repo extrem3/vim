@@ -15,9 +15,11 @@ function! MakeBibtex()
   call MakeLatex()
   if len(getqflist()) == 0
     " bibtex round
+    call AlertUser("1st compiling done, compiling bibtex", "update")
     call SetUpMakeForBibtex()
     silent make
     " latex round
+    call AlertUser("2st compiling done", "update")
     call SetUpMakeForLatex()
     call MakeLatex()
     " latex round
@@ -28,10 +30,13 @@ function! MakeBibtex()
 endfunction
 
 function! MakeLatex()
+  call AlertUser("Compiling", "update")
   silent make main.tex
   if len(getqflist()) > 0
+    call AlertUser("Compiling failed", "error")
     copen
   else
+    call AlertUser("Successfully compiled", "done")
     cclose
   endif
 endfunction
@@ -39,3 +44,16 @@ endfunction
 nnoremap <buffer> ,r :!mupdf main.pdf<cr><cr>
 nnoremap <buffer> ,w :<c-u>call MakeLatex()<cr>
 nnoremap <buffer> ,b :<c-u>call MakeBibtex()<cr>
+
+
+function! OssLatexMake()
+  g/^$/d
+  %s/^\s*//
+  %s/.*)\ \(.*\)$/\ \ \\task{\1}\r\ \ {}/
+  %s/^Naloga\ \(.*\)/\\end\{tasks\}\r\r\r\%===============================================================================>>\ Section\ [Naloga\ \1]\r\\section*\{Naloga\ \1\}\r\\label\{sec:naloga_\1\}\r\r\\begin\{tasks\}
+  %s/č/\\v c/
+  %s/š/\\v s/
+  %s/ž/\\v z/
+  g/^\s*\\task/normal gqq
+  normal ggdjGp<<
+endfunction
