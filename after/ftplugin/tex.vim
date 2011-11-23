@@ -46,6 +46,12 @@ nnoremap <buffer> ,w :<c-u>call MakeLatex()<cr>
 nnoremap <buffer> ,b :<c-u>call MakeBibtex()<cr>
 
 
+function! RepairCSZ()
+  '<,'>s/č/\\v c/
+  '<,'>s/š/\\v s/
+  '<,'>s/ž/\\v z/
+endfunction
+
 function! OssLatexMake()
   g/^$/d
   %s/^\s*//

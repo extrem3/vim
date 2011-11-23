@@ -26,7 +26,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
 Bundle 'sjl/threesome.vim'
 " Bundle 'chrismetcalf/vim-yankring'
-Bundle 'vim-scripts/AutoComplPop'
+" Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/bufkill.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'mattn/zencoding-vim'
@@ -630,8 +630,8 @@ autocmd! BufWritePost .vimrc source %
 botright cwindow
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-autocmd BufAdd * match OverLength /\%81v.\+/
-match OverLength /\%81v.\+/
+" autocmd BufAdd * match OverLength /\%81v.\+/
+" match OverLength /\%81v.\+/
 
 
 
