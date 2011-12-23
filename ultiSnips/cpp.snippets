@@ -4,15 +4,29 @@ extends c
 #                            TextMate Snippets                            #
 ###########################################################################
 
-snippet cla "class .. (class)"
-class ${1:`!p snip.rv = snip.basename or "name"`}
+snippet ifndef "#ifndef ..."
+#ifndef ${1:`!p snip.rv = snip.basename.upper() or "name"`_H_}
+#define $1
+
+$0
+
+#endif //$1
+endsnippet
+
+snippet str "struct .. (struct)"
+struct ${1}
+{
+  $0
+};
+endsnippet
+
+snippet class "class .. (class)"
+class ${1:`!p snip.rv = ''.join(item.title() for item in snip.basename.split('_')) or "name"`}
 {
  public:
-  ${1/(\w+).*/$1/} (${2});
-  virtual ~${1/(\w+).*/$1/} ();
-
+  $1(${2});
+  virtual ~$1();
  private:
-  ${0:/* data */}
 };
 endsnippet
 

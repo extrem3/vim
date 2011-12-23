@@ -26,9 +26,10 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
 Bundle 'sjl/threesome.vim'
 " Bundle 'chrismetcalf/vim-yankring'
-" Bundle 'vim-scripts/AutoComplPop'
+Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/bufkill.vim'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'vim-scripts/camelcasemotion'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/gitv'
 Bundle 'majutsushi/tagbar'
@@ -233,7 +234,7 @@ nnoremap N Nzz
 
 " SplitJoin
 nnoremap K /[^ ]<cr>"zd$jyyP^v$h"zpJk:s/\v +$//<cr>:noh<cr>j^
-nnoremap S lr<cr>k$
+nnoremap S li<cr><c-[>k$
 
 onoremap ad a[
 onoremap id i[
@@ -284,7 +285,7 @@ ino <C-Enter> <c-r>=InsertMissingBracket("2")<cr><esc>A;<esc>o
 ino <C-k> <c-r>=InsertMissingBracket("2")<cr>
 
 
-map ,w :w<cr>
+" map ,w :w<cr>
 nmap ,v :source $MYVIMRC<CR>
 " nnoremap <buffer> ,c :!cd bin/ && make<cr>
 autocmd FileType *.cc,*.h nnoremap <buffer> ,c :!cd bin/\|make<cr>
@@ -435,7 +436,7 @@ function! InsertMissingBracket(mode)
 	endif
 endfunction
 
-colorscheme Tomorrow-Night
+colorscheme dummy
 if has('gui_running')
 	" set guifont=inconsolata
 	set guifont=Terminus\ 9
@@ -623,7 +624,11 @@ map ,h :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 " goto definition with F12 
 map ,d <C-]>
 "set iskeyword=@,48-57,_,192-255,(,),=,[,],<,>,: 
-set iskeyword+=_,-,<,>,$,@,%,#
+" set iskeyword+=_,-,<,>,$,@,%,#
+" set iskeyword-=_,<,>,%,#
+set iskeyword=@,48-57,_,192-255
+
+set switchbuf=useopen
 
 autocmd! BufWritePost .vimrc source %
 
