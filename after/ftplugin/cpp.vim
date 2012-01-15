@@ -16,5 +16,5 @@ function! MakeCc()
   endif
 endfunction
 
-nnoremap <buffer> _w :<c-u>call MakeCc()<cr>
-nnoremap <buffer> _t :<c-u>call CheckTests()<cr>
+nnoremap <buffer> <leader>w :<c-u>call MakeCc()<cr>
+nnoremap <buffer> <leader>t :<c-u>call CheckTests()<cr>

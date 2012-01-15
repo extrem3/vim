@@ -41,9 +41,9 @@ function! MakeLatex()
   endif
 endfunction
 
-nnoremap <buffer> _r :!mupdf main.pdf<cr><cr>
-nnoremap <buffer> _w :<c-u>call MakeLatex()<cr>
-nnoremap <buffer> _b :<c-u>call MakeBibtex()<cr>
+nnoremap <buffer> <leader>r :!mupdf main.pdf<cr><cr>
+nnoremap <buffer> <leader>w :<c-u>call MakeLatex()<cr>
+nnoremap <buffer> <leader>b :<c-u>call MakeBibtex()<cr>
 
 
 function! RepairCSZ()

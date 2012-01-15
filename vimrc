@@ -29,7 +29,7 @@ Bundle 'sjl/threesome.vim'
 Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/bufkill.vim'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'vim-scripts/camelcasemotion'
+" Bundle 'vim-scripts/camelcasemotion'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/gitv'
 Bundle 'majutsushi/tagbar'
@@ -201,6 +201,10 @@ nnoremap <leader>b ,lj
 
 set wildignore+=.git/*
 let g:ctrlp_working_path_mode = 0
+nnoremap <space>o :CtrlP<CR>
+nnoremap <space>p :CtrlPBuffer<CR>
+nnoremap <space>j 10j
+nnoremap <space>k 10k
 
 nnoremap <silent> <leader>p :YRShow<CR>
 
@@ -251,8 +255,9 @@ inoremap ,f {<cr><bs><bs>}<esc>ko
 inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
 
 " Toggle folds with space
-nnoremap <space> za
-vnoremap <space> za
+" nnoremap <space> za
+" vnoremap <space> za
+
 
 " Smart moving between windows
 nnoremap <C-h> <C-w>h
@@ -480,8 +485,8 @@ function! NumberToggle()
 	endif
 endfunction
 
-" highlight ColorColumn ctermbg=darkblue ctermfg=white guibg=#592929
-" set colorcolumn=80
+highlight ColorColumn ctermbg=darkblue ctermfg=white guibg=#592929
+set colorcolumn=80
 
 function! Sp(dir, mode, linked, ...)
 
