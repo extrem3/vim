@@ -18,3 +18,19 @@ endfunction
 
 nnoremap <buffer> <leader>w :<c-u>call MakeCc()<cr>
 nnoremap <buffer> <leader>t :<c-u>call CheckTests()<cr>
+nnoremap <buffer> <leader>r g:ClangUpdateQuickFix()
+
+function! ConstructDefinitions()
+  exec "set paste<cr>i<c-r>=protodef#ReturnSkeletonsFromPrototypesForCurrentBuffer({})<cr><esc>='[:set nopaste<cr>"
+endfunction
+
+function! UpdateVsp()
+  exec 'cmap E rightbelow vsp src/' . expand('%:t:r') . '.cc<cr>'
+endfunction
+
+au! BufEnter *.hpp,*.h,*.hxx call UpdateVsp()
+nnoremap <buffer> <leader>pp :<c-u>call ConstructDefinitions()<cr>
+" nnoremap <buffer> <leader>pg "5yy?private:"5Pf_Da() const { return "5pdwkJA }
+" nnoremap <buffer> <leader>ps "5yy?private:Pdwivoid set_f_Da("5pkJxf_Da) {"5pdwf;xkJA = "5pdwf_xkJA }
+nnoremap <buffer> <leader>pg "5yy?private:"5Pf_Da() const;
+nnoremap <buffer> <leader>ps "5yy?private:Pdwivoid set_f_Da("5pkJxf_Da);

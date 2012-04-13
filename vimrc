@@ -35,6 +35,8 @@ Bundle 'gregsexton/gitv'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/UltiSnips'
 Bundle 'kien/ctrlp.vim'
+Bundle 'mikewest/vimroom'
+Bundle 'derekwyatt/vim-protodef'
 " vim-scripts
 
 " Non Github repos
@@ -129,6 +131,7 @@ set path+=/usr/include/qt4/QtCore/
 set path+=/usr/include/qt4/QtGui/
 set path+=/home/andr3/projects/cc/libs/gtest/gtest-1.6.0/include/
 exec "set path+=" . getcwd() . "/inc/"
+exec "set path+=" . getcwd()
 
 " nnoremap <leader>s V`]
 cmap w!! w !sudo tee % >/dev/null
@@ -662,3 +665,5 @@ function! AlertUser(text, status)
   redraw
 endfunction
 " command! NyanMe call NyanMe()
+"
+nnoremap <space>v <Plug>VimroomToggle
