@@ -666,3 +666,4 @@ endfunction
 " command! NyanMe call NyanMe()
 "
 nnoremap <space>v <Plug>VimroomToggle
+
