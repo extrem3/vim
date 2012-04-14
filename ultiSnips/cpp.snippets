@@ -13,6 +13,14 @@ $0
 #endif //$1
 endsnippet
 
+snippet set "setter"
+void set_${1}(${2:int} $1_) { $1_ = $1; }
+endsnippet
+
+snippet get "getter"
+${1} ${2}() const { return $2_; }$0
+endsnippet
+
 snippet str "struct .. (struct)"
 struct ${1}
 {
