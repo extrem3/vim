@@ -333,6 +333,10 @@ map cr :cr<C-m>
 map cla :cla<C-m>
 map cc :cc<C-m>
 
+function! FSReturnReadableCompanionFilename(filename)
+  return 'inc/' . expand(a:filename . ':t:r') . '.h'
+endfunction
+
 
 function! CheckTests()
   call AlertUser("Compiling", "update")
@@ -667,3 +671,4 @@ endfunction
 " command! NyanMe call NyanMe()
 "
 nnoremap <space>v <Plug>VimroomToggle
+
