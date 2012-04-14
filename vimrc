@@ -333,7 +333,6 @@ map cr :cr<C-m>
 map cla :cla<C-m>
 map cc :cc<C-m>
 
-
 function! CheckTests()
   call AlertUser("Compiling", "update")
   silent make

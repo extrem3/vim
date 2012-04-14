@@ -24,6 +24,10 @@ function! ConstructDefinitions()
   exec "set paste<cr>i<c-r>=protodef#ReturnSkeletonsFromPrototypesForCurrentBuffer({})<cr><esc>='[:set nopaste<cr>"
 endfunction
 
+function! FSReturnReadableCompanionFilename(filename)
+  return 'inc/' . expand(a:filename . ':t:r') . '.h'
+endfunction
+
 function! UpdateVsp()
   exec 'cmap E rightbelow vsp src/' . expand('%:t:r') . '.cc<cr>'
 endfunction
