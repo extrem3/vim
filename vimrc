@@ -293,10 +293,10 @@ ino <C-k> <c-r>=InsertMissingBracket("2")<cr>
 " map ,w :w<cr>
 nmap ,v :source $MYVIMRC<CR>
 " nnoremap <buffer> ,c :!cd bin/ && make<cr>
-autocmd FileType *.cc,*.h nnoremap <buffer> ,c :!cd bin/\|make<cr>
+" autocmd FileType *.cc,*.h nnoremap <buffer> ,c :!cd bin/\|make<cr>
 autocmd FileType html nnoremap <buffer> ,r :!firefox %<cr><cr>
 autocmd FileType php nnoremap <buffer> ,r :exe(GetUrl(expand("%:p")))<cr><cr>
-autocmd FileType cc,h nnoremap <buffer> ,r :!./"%:r"<cr>
+" autocmd FileType cc,h nnoremap <buffer> ,r :!./"%:r"<cr>
 
 " Language specific mappings
 imap ,s š
