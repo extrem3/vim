@@ -1,139 +1,94 @@
+" ----------------------------------------------------------------------------
 " Vim color file
-"
-" Author: Anthony Carapetis <anthony.carapetis@gmail.com>
-"
-" Note: Based on github's syntax highlighting theme
-"       Used Brian Mock's darkspectrum as a starting point/template
-"       Thanks to Ryan Heath for an easy list of some of the colours:
-"       http://rpheath.com/posts/356-github-theme-for-syntax-gem
+" Maintainer:   John-Paul Bader <contact@smyck.org>
+" Last Change:  2012 April
+" License:      Beer Ware
+" ----------------------------------------------------------------------------
 
-hi clear
+let g:colors_name = "smyck"
 
-set background=light
-if version > 580
-    " no guarantees for version 5.8 and below, but this makes it stop
-    " complaining
-    hi clear
-    if exists("syntax_on")
-	syntax reset
-    endif
+highlight clear Normal
+set background=dark
+set linespace=2
+
+" Syntaxeinstellungen zuruecksetzen, wenn Syntax Highlighting aktiviert ist
+if exists("syntax_on")
+  syntax reset
 endif
-let g:colors_name="github"
 
-hi Normal       guifg=#000000 guibg=#F8F8FF
+hi Normal               cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#242424   guifg=#F7F7F7
+hi LineNr               cterm=none ctermbg=none     ctermfg=8       gui=none        guibg=#242424   guifg=#8F8F8F
+hi StatusLine           cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#5D5D5D   guifg=#FBFBFB
+hi StatusLineNC         cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#5D5D5D   guifg=#FBFBFB
+hi Search               cterm=none ctermbg=6        ctermfg=15      gui=none        guibg=#2EB5C1   guifg=#F7F7F7
+hi IncSearch            cterm=none ctermbg=3        ctermfg=8       gui=none        guibg=#F6DC69   guifg=#8F8F8F
+hi ColumnMargin         cterm=none ctermbg=0                        gui=none        guibg=#000000
+hi Error                cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi ErrorMsg             cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi Folded               cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#8F8F8F   guifg=#C4E858
+hi FoldColumn           cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#8F8F8F   guifg=#C4E858
+hi NonText              cterm=bold ctermbg=none     ctermfg=8       gui=bold                        guifg=#8F8F8F
+hi ModeMsg              cterm=bold ctermbg=none     ctermfg=10      gui=none
+hi Pmenu                cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#8F8F8F   guifg=#F7F7F7
+hi PmenuSel             cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
+hi PmenuSbar            cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
+hi SpellBad             cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi SpellCap             cterm=none ctermbg=4        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi SpellRare            cterm=none ctermbg=4        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi SpellLocal           cterm=none ctermbg=4        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi Visual               cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
+hi Directory            cterm=none ctermbg=none     ctermfg=4       gui=none        guibg=#242424   guifg=#88CCE7
+hi SpecialKey           cterm=none ctermbg=none     ctermfg=8       gui=none                        guifg=#8F8F8F
+hi DiffAdd              cterm=bold ctermbg=2        ctermfg=15
+hi DiffChange           cterm=bold ctermbg=4        ctermfg=15
+hi DiffDelete           cterm=bold ctermbg=1        ctermfg=15
+hi DiffText             cterm=bold ctermbg=3        ctermfg=8
+hi MatchParen           cterm=none ctermbg=6        ctermfg=15      gui=none        guibg=#2EB5C1   guifg=#F7F7F7
+hi CursorLine           cterm=none ctermbg=238      ctermfg=none    gui=none        guibg=#424242
+hi Title                cterm=none ctermbg=none     ctermfg=4       gui=none                        guifg=#88CCE7
 
-" {{{ Cursor
-hi Cursor		guibg=#444454 guifg=#F8F8FF
-hi CursorLine	guibg=#D8D8DD
-hi CursorColumn	guibg=#E8E8EE
-" }}}
+" ----------------------------------------------------------------------------
+" Syntax Highlighting
+" ----------------------------------------------------------------------------
+hi Keyword              cterm=none ctermbg=none ctermfg=10          gui=none        guifg=#D1FA71
+hi Comment              cterm=none ctermbg=none ctermfg=8           gui=none        guifg=#8F8F8F
+hi Delimiter            cterm=none ctermbg=none ctermfg=15          gui=none        guifg=#F7F7F7
+hi Identifier           cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#96D9F1
+hi Structure            cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#9DEEF2
+hi Ignore               cterm=none ctermbg=none ctermfg=8           gui=none        guifg=bg
+hi Constant             cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#96D9F1
+hi PreProc              cterm=none ctermbg=none ctermfg=10          gui=none        guifg=#D1FA71
+hi Type                 cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#96D9F1
+hi Statement            cterm=none ctermbg=none ctermfg=10          gui=none        guifg=#D1FA71
+hi Special              cterm=none ctermbg=none ctermfg=6           gui=none        guifg=#d7d7d7
+hi String               cterm=none ctermbg=none ctermfg=3           gui=none        guifg=#F6DC69
+hi Number               cterm=none ctermbg=none ctermfg=3           gui=none        guifg=#F6DC69
+hi Underlined           cterm=underline                             gui=underline
+hi Symbol               cterm=none ctermbg=none ctermfg=9           gui=none        guifg=#FAB1AB
+hi Method               cterm=none ctermbg=none ctermfg=15          gui=none        guifg=#F7F7F7
+hi Interpolation        cterm=none ctermbg=none ctermfg=6           gui=none        guifg=#2EB5C1
 
-" {{{ Diff
-hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
-hi DiffChange                    guibg=#ececec gui=none
-hi DiffText        guifg=#000033 guibg=#DDDDFF gui=none
-hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
-" }}}
+" Erlang
+hi link erlangAtom            Keyword
+hi link erlangBitType         Keyword
 
-" {{{ Folding / Line Numbering / Status Lines
-hi Folded		guibg=#ECECEC guifg=#808080 gui=bold
-hi vimFold		guibg=#ECECEC guifg=#808080 gui=bold
-hi FoldColumn	guibg=#ECECEC guifg=#808080 gui=bold
+hi link rubyBeginend          Keyword
+hi link rubyClass             Keyword
+hi link rubyModule            Keyword
+hi link rubyKeyword           Keyword
+hi link rubyOperator          Method
+hi link rubyIdentifier        Keyword
+hi link rubyClassVariable     Symbol
+hi link rubyInstanceVariable  Constant
+hi link rubyGlobalVariable    Constant
+hi link rubyClassVariable     Method
+hi link rubyConstant          Constant
+hi link rubySymbol            Symbol
+hi link rubyFunction          Constant
+hi link rubyControl           Keyword
+hi link rubyConditional       Keyword
+hi link rubyInterpolation     Interpolation
+hi link rubyInterpolationDelimiter    Interpolation
+hi link rubyRailsMethod       Method
 
-hi LineNr		guifg=#959595 guibg=#ECECEC gui=bold
-hi NonText		guifg=#808080 guibg=#ECECEC
-hi Folded		guifg=#808080 guibg=#ECECEC gui=bold
-hi FoldeColumn  guifg=#808080 guibg=#ECECEC gui=bold
 
-hi VertSplit	guibg=#bbbbbb guifg=#bbbbbb gui=none
-hi StatusLine   guibg=#bbbbbb guifg=#404040 gui=bold
-hi StatusLineNC guibg=#d4d4d4 guifg=#404040 gui=italic
-" }}}
-
-" {{{ Misc
-hi ModeMsg		guifg=#990000
-hi MoreMsg		guifg=#990000
-
-hi Title		guifg=#ef5939
-hi WarningMsg	guifg=#ef5939
-hi SpecialKey   guifg=#177F80 gui=italic
-
-hi MatchParen	guibg=#cdcdfd guifg=#000000
-hi Underlined	guifg=#000000 gui=underline
-hi Directory	guifg=#990000
-" }}}
-
-" {{{ Search, Visual, etc
-hi Visual		guifg=#FFFFFF guibg=#3465a4 gui=none
-hi VisualNOS    guifg=#FFFFFF guibg=#204a87 gui=none
-hi IncSearch	guibg=#cdcdfd guifg=#000000 gui=italic
-hi Search		guibg=#cdcdfd guifg=#000000 gui=italic
-" }}}
-
-" {{{ Syntax groups
-hi Ignore		guifg=#808080
-hi Identifier	guifg=#0086B3
-hi PreProc		guifg=#A0A0A0 gui=bold
-hi Comment		guifg=#999988
-hi Constant		guifg=#177F80 gui=none
-hi String		guifg=#D81745
-hi Function		guifg=#990000 gui=bold
-hi Statement	guifg=#000000 gui=bold
-hi Type			guifg=#445588 gui=bold
-hi Number		guifg=#1C9898
-hi Todo			guifg=#FFFFFF guibg=#990000 gui=bold
-hi Special		guifg=#159828 gui=bold
-hi rubySymbol   guifg=#960B73
-hi Error        guibg=#f8f8ff guifg=#ff1100 gui=undercurl
-hi Todo         guibg=#f8f8ff guifg=#ff1100 gui=underline
-hi Label        guifg=#000000 gui=bold
-hi StorageClass guifg=#000000 gui=bold
-hi Structure    guifg=#000000 gui=bold
-hi TypeDef      guifg=#000000 gui=bold
-" }}}
-
-" {{{ Completion menus
-hi WildMenu     guifg=#7fbdff guibg=#425c78 gui=none
-
-hi Pmenu        guibg=#808080 guifg=#ffffff gui=bold
-hi PmenuSel     guibg=#cdcdfd guifg=#000000 gui=italic
-hi PmenuSbar    guibg=#000000 guifg=#444444
-hi PmenuThumb   guibg=#aaaaaa guifg=#aaaaaa
-" }}}
-
-" {{{ Spelling
-hi spellBad     guisp=#fcaf3e
-hi spellCap     guisp=#73d216
-hi spellRare    guisp=#fcaf3e
-hi spellLocal   guisp=#729fcf
-" }}}
-
-" {{{ Aliases
-hi link cppSTL          Function
-hi link cppSTLType      Type
-hi link Character		Number
-hi link htmlTag			htmlEndTag
-"hi link htmlTagName     htmlTag
-hi link htmlLink		Underlined
-hi link pythonFunction	Identifier
-hi link Question		Type
-hi link CursorIM		Cursor
-hi link VisualNOS		Visual
-hi link xmlTag			Identifier
-hi link xmlTagName		Identifier
-hi link shDeref			Identifier
-hi link shVariable		Function
-hi link rubySharpBang	Special
-hi link perlSharpBang	Special
-hi link schemeFunc      Statement
-"hi link shSpecialVariables Constant
-"hi link bashSpecialVariables Constant
-" }}}
-
-" {{{ Tabs (non-gui0
-hi TabLine		guifg=#404040 guibg=#dddddd gui=none
-hi TabLineFill	guifg=#404040 guibg=#dddddd gui=none
-hi TabLineSel	guifg=#404040 gui=bold
-" }}}
-"
-" vim: sw=4 ts=4 foldmethod=marker

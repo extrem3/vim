@@ -42,7 +42,7 @@ function! MakeLatex()
 endfunction
 
 nnoremap <buffer> <leader>r :!mupdf main.pdf<cr><cr>
-nnoremap <buffer> <leader>w :<c-u>call MakeLatex()<cr>
+nnoremap <buffer> <leader>c :<c-u>call MakeLatex()<cr>
 nnoremap <buffer> <leader>b :<c-u>call MakeBibtex()<cr>
 
 

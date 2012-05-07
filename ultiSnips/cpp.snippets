@@ -45,4 +45,34 @@ namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`}
 }${1/.+/ \/\//m}$1${1/.+//m}
 endsnippet
 
+snippet inct "#include .. (tests)"
+#include "gtest/gtest.h"
+#include "${1:`!p
+a = snip.basename
+b = a.split('_')
+b.pop()
+c = '_'.join(b)
+snip.rv = c + '.h'`}"
+endsnippet
+
+snippet test "google TEST macro" b
+TEST(${1:`!p
+a = snip.basename.split('_')
+a.pop()
+snip.rv = ''.join(item.title() for item in a) or "name"`}, ${2})
+{
+  $0
+}
+endsnippet
+
+snippet exe "Expect_eq for google tests" b
+EXPECT_EQ(${1:value}, ${2:call});
+endsnippet
+snippet ext "Expect_true for google tests" b
+EXPECT_TRUE(${1:call});
+endsnippet
+snippet exf "Expect_false for google tests" b
+EXPECT_FALSE(${1:call});
+endsnippet
+
 # vim:ft=snippets:

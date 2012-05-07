@@ -16,7 +16,7 @@ function! MakeCc()
   endif
 endfunction
 
-nnoremap <buffer> <leader>w :<c-u>call MakeCc()<cr>
+nnoremap <buffer> <leader>c :<c-u>call MakeCc()<cr>
 nnoremap <buffer> <leader>t :<c-u>call CheckTests()<cr>
 nnoremap <buffer> <leader>r g:ClangUpdateQuickFix()
 
@@ -29,7 +29,8 @@ function! FSReturnReadableCompanionFilename(filename)
 endfunction
 
 function! UpdateVsp()
-  exec 'cmap E rightbelow vsp src/' . expand('%:t:r') . '.cc<cr>'
+  exec 'cnoremap E rightbelow vsp src/' . expand('%:t:r') . '.cc<cr>'
+  exec 'cnoremap T rightbelow vsp tests/' . expand('%:t:r') . '_test.cc<cr>'
 endfunction
 
 au! BufEnter *.hpp,*.h,*.hxx call UpdateVsp()

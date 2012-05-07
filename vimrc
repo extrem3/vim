@@ -51,7 +51,11 @@ set statusline+=%f\ %2*%m\ %1*%h
 set statusline+=%#warningmsg#
 set statusline+=%{fugitive#statusline()}
 set statusline+=%*
-set statusline+=%r%=[%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]\ %12.(%c:%l/%L%)\ [%p%%]
+set statusline+=%r
+set statusline+=%=
+set statusline+=%{v:register}
+set statusline+=\ [%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]
+set statusline+=\ %10.(%c:%l/%L%)\ [%p%%]
 set laststatus=2
 "}
 
@@ -102,6 +106,8 @@ set number
 set cursorline
 set guicursor=i:block-Cursor
 set guicursor=n-v-c:blinkon0
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 " Setting maximum width to 80 culomns
 " set textwidth=80
 " set wrap
@@ -260,7 +266,7 @@ inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
 " Toggle folds with space
 " nnoremap <space> za
 " vnoremap <space> za
-
+nnoremap <leader>w :w<cr>
 
 " Smart moving between windows
 nnoremap <C-h> <C-w>h
@@ -337,6 +343,7 @@ function! CheckTests()
   call AlertUser("Compiling", "update")
   silent make
   call AlertUser("Checking tests", "warning")
+  silent !./coverage.rb clear
   if len(getqflist()) == 0
     set makeprg=./bin/tests\ $*\\\|\ grep\ \-i\ 'Failure'\ \-A\ 3\ $*\\\|\ grep\ \-v\ \-i\ '\\-\\-'\ $*\\\|\ sed\ \-e\ 'N;s\/\\n\/,\ \/'\ $*\\\|\ sed\ \-e\ 'N;s\/\\n\/\ >\ \/'\ $*\\\|\ sed\ \-e\ 'N;s\/\ \ \/\ \/'
     set errorformat=%f:%l:\ Failure\\,\ Value\ of:\ %m
@@ -347,6 +354,30 @@ function! CheckTests()
     else
       call AlertUser("All tests passed", "done")
       cclose
+      " set makeprg=./coverage.rb\ %
+      " set errorformat=%f:%l:\ %m
+      " silent make
+      " if len(getqflist()) > 0
+      "   call AlertUser("All tests passed, but these cases are not covered", "warning")
+      "   copen
+      " else
+      "   cclose
+      " endif
+      let shellcmd = './coverage.rb ' . expand("%")
+      let output=system(shellcmd)
+      if v:shell_error
+        call AlertUser("could not check for coverage", "warning")
+        return 0
+      endif
+      if output != "noerrors"
+        call AlertUser("All tests passed", "done")
+        exe 'sbuffer src/' . substitute(expand("%:t:r"), '\(.*\)_test', '\1', "g") . '.cc'
+        exe output
+      else
+        exe 'sbuffer src/' . substitute(expand("%:t:r"), '\(.*\)_test', '\1', "g") . '.cc'
+        match
+      endif
+      
     endif
   endif
   call SetUpMakeForCpp()
