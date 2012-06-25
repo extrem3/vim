@@ -25,9 +25,11 @@ Bundle 'vim-scripts/tComment'
 Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
 Bundle 'sjl/threesome.vim'
+Bundle 'abudden/TagHighlight'
 " Bundle 'chrismetcalf/vim-yankring'
 Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/bufkill.vim'
+Bundle 'Townk/vim-autoclose'
 Bundle 'Lokaltog/vim-easymotion'
 " Bundle 'vim-scripts/camelcasemotion'
 Bundle 'mattn/zencoding-vim'
@@ -136,6 +138,7 @@ set path+=/usr/include/qt4/
 set path+=/usr/include/qt4/QtCore/
 set path+=/usr/include/qt4/QtGui/
 set path+=/home/andr3/projects/cc/libs/gtest/gtest-1.6.0/include/
+set path+=/home/andr3/projects/cc/libs/a3/include/
 exec "set path+=" . getcwd() . "/inc/"
 exec "set path+=" . getcwd()
 
@@ -267,6 +270,19 @@ inoremap <C-j> <esc>/\v["\]}')>\$]<CR>:nohlsearch<cr>a
 " nnoremap <space> za
 " vnoremap <space> za
 nnoremap <leader>w :w<cr>
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+
 
 " Smart moving between windows
 nnoremap <C-h> <C-w>h
@@ -676,6 +692,7 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " autocmd BufAdd * match OverLength /\%81v.\+/
 " match OverLength /\%81v.\+/
 
+highlight Typedef guifg=#592929
 
 
 function! AlertUser(text, status)
@@ -698,3 +715,6 @@ endfunction
 "
 nnoremap <space>v <Plug>VimroomToggle
 
+vnoremap <silent> zz :<C-u>call setpos('.',[0,(line("'>")-line("'<"))/2+line("'<"),0,0])<Bar>normal! zzgv<CR>
+vnoremap <silent> zt :<C-u>call setpos('.',[0,line("'<"),0,0])<Bar>normal! ztgv<CR>
+vnoremap <silent> zb :<C-u>call setpos('.',[0,line("'>"),0,0])<Bar>normal! zbgv<CR>

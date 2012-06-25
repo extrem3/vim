@@ -18,7 +18,7 @@ endfunction
 
 nnoremap <buffer> <leader>c :<c-u>call MakeCc()<cr>
 nnoremap <buffer> <leader>t :<c-u>call CheckTests()<cr>
-nnoremap <buffer> <leader>r g:ClangUpdateQuickFix()
+nnoremap <buffer> <leader>r :<c-u>call g:ClangUpdateQuickFix()<cr>
 
 function! ConstructDefinitions()
   exec "set paste<cr>i<c-r>=protodef#ReturnSkeletonsFromPrototypesForCurrentBuffer({})<cr><esc>='[:set nopaste<cr>"
