@@ -1,6 +1,7 @@
 function! SetUpMakeForScm()
-  set makeprg=echo\ '\\#lang\ planet\ neil/sicp'\ >\ /tmp/temp.scm\ &&\ cat\ %\ >>\ /tmp/temp.scm\ &&\ racket\ /tmp/temp.scm
-  set errorformat=%m
+  " set makeprg=echo\ '\\#lang\ planet\ neil/sicp'\ >\ /tmp/temp.scm\ &&\ cat\ %\ >>\ /tmp/temp.scm\ &&\ racket\ /tmp/temp.scm
+  let &makeprg="echo '\\#lang planet neil/sicp' > /tmp/temp.scm && cat % >> /tmp/temp.scm && racket /tmp/temp.scm > /tmp/scheme.out"
+  set errorformat=%s:%l:%c:\ %m
 endfunction
 call SetUpMakeForScm()
 

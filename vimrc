@@ -38,6 +38,7 @@ Bundle 'gregsexton/gitv'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/UltiSnips'
 Bundle 'kien/ctrlp.vim'
+Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'mikewest/vimroom'
 Bundle 'derekwyatt/vim-protodef'
 " vim-scripts
@@ -810,3 +811,6 @@ nnoremap <space>v <Plug>VimroomToggle
 vnoremap <silent> zz :<C-u>call setpos('.',[0,(line("'>")-line("'<"))/2+line("'<"),0,0])<Bar>normal! zzgv<CR>
 vnoremap <silent> zt :<C-u>call setpos('.',[0,line("'<"),0,0])<Bar>normal! ztgv<CR>
 vnoremap <silent> zb :<C-u>call setpos('.',[0,line("'>"),0,0])<Bar>normal! zbgv<CR>
+
+
+autocmd! FileType qf wincmd J
