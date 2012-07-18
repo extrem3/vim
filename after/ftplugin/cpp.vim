@@ -28,12 +28,9 @@ function! FSReturnReadableCompanionFilename(filename)
   return 'inc/' . expand(a:filename . ':t:r') . '.h'
 endfunction
 
-function! UpdateVsp()
-  exec 'cnoremap E rightbelow vsp src/' . expand('%:t:r') . '.cc<cr>'
-  exec 'cnoremap T rightbelow vsp tests/' . expand('%:t:r') . '_test.cc<cr>'
-endfunction
+exec 'command! E rightbelow vsp src/' . expand('%:t:r') . '.cc'
+exec 'command! T rightbelow vsp tests/' . expand('%:t:r') . '_test.cc'
 
-au! BufEnter *.hpp,*.h,*.hxx call UpdateVsp()
 nnoremap <buffer> <leader>pp :<c-u>call ConstructDefinitions()<cr>
 " nnoremap <buffer> <leader>pg "5yy?private:"5Pf_Da() const { return "5pdwkJA }
 " nnoremap <buffer> <leader>ps "5yy?private:Pdwivoid set_f_Da("5pkJxf_Da) {"5pdwf;xkJA = "5pdwf_xkJA }
