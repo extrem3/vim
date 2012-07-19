@@ -5,6 +5,9 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+" Set mapleader to ,
+let mapleader=","
+
 " Github
 Bundle 'gmarik/vundle'
 Bundle 'sjbach/lusty'
@@ -171,9 +174,6 @@ set statusline+=\ [%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]
 set statusline+=\ %10.(%c:%l/%L%)\ [%p%%]
 set laststatus=2
 
-" Set mapleader to ,
-let mapleader=","
-
 " Vim special file directories
 set undodir=~/.vim/tmp/undo// " undo files
 set backupdir=~/.vim/tmp/backup// " backups
@@ -234,7 +234,7 @@ autocmd WinLeave * setlocal nocursorline
 syntax on
 
 set wildmenu
-set wildmode=full
+set wildmode=longest,full
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc,*.pdf          " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
@@ -277,7 +277,7 @@ nnoremap <A-l> <C-w>5<
 map gt <esc>:bn<cr>
 map gT <esc>:bp<cr>
 
-" Toggle case with gu
+" toggle case with gu
 map gu g~
 
 " Language specific mappings
@@ -325,7 +325,7 @@ endfunction
 colorscheme dummy
 if has('gui_running')
 	" set guifont=inconsolata\ 10
-	set guifont=FreeMono\ 10
+	" set guifont=FreeMono\ 10
 	" set guifont=Terminus\ 8
 endif
 
