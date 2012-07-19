@@ -31,89 +31,6 @@ Bundle 'derekwyatt/vim-protodef'
 filetype plugin indent on
 
 
-"Setting up the statusline
-set statusline=
-set statusline+=%f\ %2*%m\ %1*%h
-set statusline+=%#warningmsg#
-set statusline+=%{fugitive#statusline()}
-set statusline+=%*
-set statusline+=%r
-set statusline+=%=
-set statusline+=%{v:register}
-set statusline+=\ [%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]
-set statusline+=\ %10.(%c:%l/%L%)\ [%p%%]
-set laststatus=2
-
-" Set mapleader to ,
-let mapleader=","
-
-" Vim special file directories
-set undodir=~/.vim/tmp/undo// " undo files
-set backupdir=~/.vim/tmp/backup// " backups
-set directory=~/.vim/tmp/swap// " swap files
-
-" Don't destroy buffer after hiding it
-set hidden
-
-" Some tab options
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set autoindent
-set smartindent
-" Search options
-nnoremap / /\v
-vnoremap / /\v
-set ignorecase
-set smartcase
-set gdefault
-set incsearch
-set showmatch
-set hlsearch
-set iskeyword=@,48-57,_,192-255
-nnoremap ,<space> :noh<cr>
-vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
-vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
-" Open a Quickfix window for the last search 
-nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-" Center next and previous search results
-nnoremap n nzz
-nnoremap N Nzz
-
-" Remove pretty much everything from the GUI
-set guioptions-=m
-set guioptions-=T
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
-set guioptions-=b
-" Show numbers
-set number
-" Show current cursor line
-set cursorline
-set guicursor=i:block-Cursor
-set guicursor=n-v-c:blinkon0
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
-syntax on
-
-set wildmenu
-set wildmode=full
-set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc,*.pdf          " LaTeX intermediate files
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-
-
 " NEOCOMPLCACHE
 let g:acp_enableAtStartup = 0
 let g:neocomplcache_enable_at_startup = 1
@@ -237,15 +154,99 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "ultiSnips"]
 
 
+
+
+
+
+"Setting up the statusline
+set statusline=
+set statusline+=%f\ %2*%m\ %1*%h
+set statusline+=%#warningmsg#
+set statusline+=%{fugitive#statusline()}
+set statusline+=%*
+set statusline+=%r
+set statusline+=%=
+set statusline+=%{v:register}
+set statusline+=\ [%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}]
+set statusline+=\ %10.(%c:%l/%L%)\ [%p%%]
+set laststatus=2
+
+" Set mapleader to ,
+let mapleader=","
+
+" Vim special file directories
+set undodir=~/.vim/tmp/undo// " undo files
+set backupdir=~/.vim/tmp/backup// " backups
+set directory=~/.vim/tmp/swap// " swap files
+
+" Don't destroy buffer after hiding it
+set hidden
+
+" Some tab options
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set autoindent
+set smartindent
+" Search options
+nnoremap / /\v
+vnoremap / /\v
+set ignorecase
+set smartcase
+set gdefault
+set incsearch
+set showmatch
+set hlsearch
+set iskeyword=@,48-57,_,192-255
+nnoremap ,<space> :noh<cr>
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+" Open a Quickfix window for the last search 
+nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+" Center next and previous search results
+nnoremap n nzz
+nnoremap N Nzz
+
+" Remove pretty much everything from the GUI
+set guioptions-=m
+set guioptions-=T
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+set guioptions-=b
+" Show numbers
+set number
+" Show current cursor line
+set cursorline
+set guicursor=i:block-Cursor
+set guicursor=n-v-c:blinkon0
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+syntax on
+
+set wildmenu
+set wildmode=full
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc,*.pdf          " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+
+
 " fast vertical movement
 nnoremap <space>j 10j
 nnoremap <space>k 10k
 
 nnoremap <silent> <leader>p :YRShow<CR>
 
-
-" Smart pasting
-nnoremap p `[v`]
 
 " " Always keep cursor in the middle
 " set scrolloff=9999
@@ -323,11 +324,10 @@ endfunction
 
 colorscheme dummy
 if has('gui_running')
-	" set guifont=inconsolata
-	set guifont=Terminus\ 9
-	set completeopt=longest
+	" set guifont=inconsolata\ 10
+	set guifont=FreeMono\ 10
+	" set guifont=Terminus\ 8
 endif
-
 
 " " match overlength characters 
 " " with red background
