@@ -20,7 +20,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'sjl/gundo.vim'
 " Bundle 'sjl/threesome.vim'
 Bundle 'vim-scripts/bufkill.vim'
-" Bundle 'Townk/vim-autoclose'
+Bundle 'Townk/vim-autoclose'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/gitv'
@@ -89,6 +89,8 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " use neocomplcache & clang_complete
 let g:neocomplcache_force_overwrite_completefunc=1
 
+" AUTOCLOSE
+let g:AutoClosePreserveDotReg = 0
 
 " TAGBAR
 map <silent> <A-f> :TagbarToggle<CR>
@@ -154,8 +156,6 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "ultiSnips"]
-
-
 
 
 
