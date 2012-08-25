@@ -15,3 +15,18 @@ function! MakeScm()
 endfunction
 
 nnoremap <buffer> <leader>c :<c-u>call MakeScm()<cr>
+
+
+function! NewExcercise(type)
+  let filename_numbers = split(expand('%:t:r'), "\\.")
+  if a:type == 1
+    let new_filename = filename_numbers[0] . "." . (filename_numbers[1] + 1) . ".scm"
+  else
+    let new_filename = (filename_numbers[0] + 1) . ".1.scm"
+  endif
+  exec 'vsp ' . new_filename
+  set ft=scheme
+endfunction
+
+command! E call NewExcercise(1)
+command! En call NewExcercise(2)

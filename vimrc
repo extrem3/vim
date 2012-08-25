@@ -279,6 +279,10 @@ map gT <esc>:bp<cr>
 " toggle case with gu
 map gu g~
 
+" for quick access of underscore
+imap ,r _
+imap .r _
+
 " Language specific mappings
 imap ,s š
 imap ,z ž
@@ -325,7 +329,7 @@ colorscheme dummy
 if has('gui_running')
 	" set guifont=inconsolata\ 10
 	" set guifont=FreeMono\ 10
-	" set guifont=Terminus\ 8
+	set guifont=Terminus\ 8
 endif
 
 " " match overlength characters 
@@ -355,7 +359,9 @@ function! AlertUser(text, status)
   endif
 
   echohl passedColor
-  echo " " . a:text . " "
+  " echo " " . a:text . " "
+  echo " " . a:text . " " . repeat(" ", &columns - strlen(a:text) - 3)
+  " echohl
 
   redraw
 endfunction

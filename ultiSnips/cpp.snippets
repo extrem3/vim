@@ -55,6 +55,36 @@ c = '_'.join(b)
 snip.rv = c + '.h'`}"
 endsnippet
 
+snippet fix "google TEST macro" b
+class ${1:`!p
+a = snip.basename.split('_')
+a.pop()
+snip.rv = ''.join(item.title() for item in a) or "name"`}Test : public ::testing::Test
+{
+ protected:
+  virtual void SetUp()
+  {
+    ${3}
+  }
+  virtual void TearDown()
+  {
+    ${4}
+  }
+
+  ${2}
+};${5}
+endsnippet
+
+snippet testf "google TEST fixture" b
+TEST_F(${1:`!p
+a = snip.basename.split('_')
+a.pop()
+snip.rv = ''.join(item.title() for item in a) or "name"`}Test, ${2})
+{
+  $0
+}
+endsnippet
+
 snippet test "google TEST macro" b
 TEST(${1:`!p
 a = snip.basename.split('_')
