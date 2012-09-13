@@ -14,6 +14,8 @@ Bundle 'godlygeek/tabular'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'Shougo/neocomplcache'
 Bundle 'osyo-manga/neocomplcache-clang_complete'
+Bundle 'ujihisa/neco-ghc'
+Bundle 'lukerandall/haskellmode-vim'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/tComment'
 Bundle 'tpope/vim-fugitive'
@@ -89,6 +91,9 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " use neocomplcache & clang_complete
 let g:neocomplcache_force_overwrite_completefunc=1
 
+" NECO-GHC
+let $PATH = $PATH . ':' . expand("~/.cabal/bin")
+
 " AUTOCLOSE
 let g:AutoClosePreserveDotReg = 0
 
@@ -121,8 +126,8 @@ nnoremap <leader>gu :Gitv!<cr>
 " nnoremap <leader>gb :exe ':GbranchFinish'<CR>
 
 " CLANG_COMPLETE
+let g:clang_use_library = 1
 let g:clang_periodic_quickfix = 1
-let g:clang_use_library = 0
 let g:clang_complete_auto = 1
 let g:clang_auto_select = 1
 let g:clang_complete_copen = 1
@@ -130,6 +135,8 @@ let g:clang_hl_errors = 1
 let g:clang_snippets = 0
 let g:clang_snippets_engine = "snipmate"
 let g:clang_complete_patterns = 0
+let g:clang_user_options = '-std=c++11'
+nnoremap <leader>q call g:ClangUpdateQuickFix()<CR>
 imap <C-Space> <C-x><C-u>
 set path+=/usr/include/c++/4.6.1/
 set path+=/usr/include/i386-linux-gnu/
@@ -281,7 +288,6 @@ map gu g~
 
 " for quick access of underscore
 imap ,r _
-imap .r _
 
 " Language specific mappings
 imap ,s š
