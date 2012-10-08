@@ -229,6 +229,8 @@ set guioptions-=L
 set guioptions-=r
 set guioptions-=R
 set guioptions-=b
+
+set timeoutlen=100
 " Show numbers
 set number
 " Show current cursor line
@@ -252,6 +254,59 @@ nnoremap <space>j 10j
 nnoremap <space>k 10k
 
 nnoremap <silent> <leader>p :YRShow<CR>
+
+" Next and Last {{{
+
+" Motion for "next/last object".  "Last" here means "previous", not "final".
+" Unfortunately the "p" motion was already taken for paragraphs.
+"
+" Next acts on the next object of the given type in the current line, last acts
+" on the previous object of the given type in the current line.
+"
+" Currently only works for (, [, {, b, r, B, ', and ".
+"
+" Some examples (C marks cursor positions, V means visually selected):
+"
+" din'  -> delete in next single quotes                foo = bar('spam')
+"                                                      C
+"                                                      foo = bar('')
+"                                                                C
+"
+" canb  -> change around next parens                   foo = bar('spam')
+"                                                      C
+"                                                      foo = bar
+"                                                               C
+"
+" vil"  -> select inside last double quotes            print "hello ", name
+"                                                                        C
+"                                                      print "hello ", name
+"                                                             VVVVVV
+
+onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+
+onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+xnoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+
+function! s:NextTextObject(motion, dir)
+  let c = nr2char(getchar())
+
+  if c ==# "b"
+      let c = "("
+  elseif c ==# "B"
+      let c = "{"
+  elseif c ==# "r"
+      let c = "["
+  endif
+
+  exe "normal! ".a:dir.c."v".a:motion.c
+endfunction
+
+" }}}
 
 
 " " Always keep cursor in the middle
@@ -336,6 +391,7 @@ if has('gui_running')
 	" set guifont=inconsolata\ 10
 	" set guifont=FreeMono\ 10
 	set guifont=Terminus\ 8
+  " set guifont=Monospace\ 8
 endif
 
 " " match overlength characters 
@@ -392,5 +448,8 @@ map cc :cc<C-m>
 
 set switchbuf=useopen
 
+set cole=2
+let g:tex_conceal= 'adgm'
+hi Conceal guibg=White guifg=DarkMagenta
 
 autocmd! BufWritePost .vimrc source %

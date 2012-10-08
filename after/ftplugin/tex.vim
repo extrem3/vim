@@ -49,6 +49,8 @@ imap <buffer> ,c \v c
 imap <buffer> ,z \v z
 imap <buffer> ,s \v s
 
+let g:AutoClosePairs_add = "$"
+
 
 function! RepairCSZ()
   '<,'>s/č/\\v c/
