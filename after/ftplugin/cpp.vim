@@ -159,4 +159,3 @@ com! -nargs=* -complete=file Eh call Sp(1, 1, 2, <f-args>)
 com! -nargs=* -complete=file Eht call Sp(1, 2, 2, <f-args>)
 com! -nargs=* -complete=file Eh2 call Sp(1, 1, 1, <f-args>)
 com! -nargs=* -complete=file Eht2 call Sp(1, 2, 1, <f-args>)
-

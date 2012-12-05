@@ -230,7 +230,7 @@ set guioptions-=r
 set guioptions-=R
 set guioptions-=b
 
-set timeoutlen=100
+set timeoutlen=200
 " Show numbers
 set number
 " Show current cursor line
@@ -407,6 +407,27 @@ set colorcolumn=80
 " set textwidth=80
 " set wrap
 
+
+function! RunShellCommand(cmdline)
+  echo a:cmdline
+  let expanded_cmdline = a:cmdline
+  for part in split(a:cmdline, ' ')
+     if part[0] =~ '\v[%#<]'
+        let expanded_part = fnameescape(expand(part))
+        let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
+     endif
+  endfor
+  botright vsplit new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  " call setline(1, 'You entered:    ' . a:cmdline)
+  " call setline(2, 'Expanded Form:  ' .expanded_cmdline)
+  " call setline(3,substitute(getline(2),'.','=','g'))
+  execute '$read !'. expanded_cmdline
+  setlocal nomodifiable
+  1
+endfunction
+
+com! -complete=shellcmd -nargs=+ Shell call RunShellCommand(<q-args>)
 
 " notify user that some action was completed
 function! AlertUser(text, status)
